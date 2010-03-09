@@ -1,21 +1,41 @@
 package Metabase::Gateway;
-use Moose;
-
-use Metabase::Librarian;
-use Data::GUID;
+use Moose::Role;
 
 use Metabase::Fact;
+use Metabase::Librarian;
 use Metabase::User::Profile;
+use Metabase::User::Secret;
+use namespace::autoclean;
 
-# XXX life becomes a lot easier if we say that fact classes MUST have 1-to-1 
+requires '_build_public_librarian';
+requires '_build_private_librarian';
+requires '_build_fact_classes';
+
+has public_librarian => (
+  is       => 'ro',
+  isa      => 'Metabase::Librarian',
+  lazy     => 1,
+  builder  => '_build_public_librarian',
+);
+
+has private_librarian => (
+  is       => 'ro',
+  isa      => 'Metabase::Librarian',
+  lazy     => 1,
+  builder  => '_build_private_librarian',
+);
+
+# XXX life becomes a lot easier if we say that fact classes MUST have 1-to-1
 # relationship with a .pm file. -- dagolden, 2009-03-31
 
 has fact_classes => (
   is  => 'ro',
   isa => 'ArrayRef[Str]',
   auto_deref => 1,
-  required   => 1,
+  lazy     => 1,
+  builder => '_build_fact_classes',
 );
+
 
 has approved_types => (
   is          =>  'ro',
@@ -26,22 +46,16 @@ has approved_types => (
   init_arg    => undef,
 );
 
-has autocreate_profile => (
+has disable_security => (
   is          => 'ro',
   isa         => 'Bool',
   default     => 0,
 );
 
-has librarian => (
-  is       => 'ro',
-  isa      => 'Metabase::Librarian',
-  required => 1,
-);
-
-has secret_librarian => (
-  is       => 'ro',
-  isa      => 'Metabase::Librarian',
-  required => 1,
+has allow_registration => (
+  is          => 'ro',
+  isa         => 'Bool',
+  default     => 1,
 );
 
 # recurse report classes -- less to specify to new()
@@ -54,7 +68,19 @@ sub _build_approved_types {
     # XXX $class->can('fact_classes') ?? -- dagolden, 2009-03-31
     push @queue, $class->fact_classes if $class->isa('Metabase::Report');
   }
-  return [ map { $_->type } @approved ];
+  return [ map { Class::MOP::load_class($_); $_->type } @approved ];
+}
+
+# for use in handle_XXXX methods
+sub _fatal {
+  my ($self, $code, $reason, $details) = @_;
+  $code ||= 500;
+  $reason ||= "internal gateway error";
+  $details ||= '';
+  chomp $details;
+  my $message = "$code\: $reason";
+  $message .= ": $details" if $details;
+  die "$message\n";
 }
 
 sub _validate_resource {
@@ -65,104 +91,169 @@ sub _validate_resource {
   1;
 }
 
-sub __submitter_profile {
-  my ($self, $profile_struct) = @_;
-  # I hate nearly every variable name in this scope. -- rjbs, 2009-03-31
+sub _validate_submitter {
+  my ($self, $user_guid, $user_secret) = @_;
 
-  my $profile_guid = $profile_struct->{metadata}{core}{guid}[1];
-  my $given_fact = eval {
-    Metabase::User::Profile->from_struct($profile_struct);
+  return 1 if $self->disable_security;
+
+  # did we get arguments?
+  die "no user identity provided\n"
+    unless $user_guid;
+  die "no user secret provided\n"
+    unless $user_secret;
+
+  # check whether submitter profile is already in the Metabase
+  my $profile = eval { $self->public_librarian->extract($user_guid) }
+    or die "unknown user\n";
+
+  # check if we have a secret on file
+  my $secret;
+  eval {
+    my $found = $self->private_librarian->search(
+        'core.type' => 'Metabase-User-Secret',
+        'core.resource' => $profile->resource->resource,
+    );
+    unless ( defined $found->[0] ) {
+      die "no secret for that user\n";
+    }
+    $secret = $self->private_librarian->extract($found->[0]);
   };
 
-  die "invalid submitter profile" unless $given_fact; # bad profile provided
+  # match against submitted secret
+  die "user authentication failed\n"
+    unless defined $secret && $user_secret eq $secret->content;
 
-  my $profile_fact = eval {
-    $self->secret_librarian->extract($profile_guid);
-  };
-
-  # if not found, maybe autocreate it
-  if ( ! $profile_fact ) {
-    die "unknown submitter profile" unless $self->autocreate_profile;
-    $self->secret_librarian->store( $given_fact ); # XXX check fail -- dagolden, 2009-04-05
-    return $given_fact;
-  }
-
-  my ($profile_secret_fact) = grep { $_->isa('Metabase::User::Secret') }
-                              $profile_fact->facts;
-
-  my ($given_secret_fact)   = grep { $_->isa('Metabase::User::Secret') }
-                              $given_fact->facts;
-
-  my $profile_secret = $profile_secret_fact->content;
-  my $given_secret   = $given_secret_fact->content;
-
-  die "submitter could not be authenticated"
-    unless defined $profile_secret
-    and    defined $given_secret
-    and    $profile_secret eq $given_secret;
-
-  return $profile_fact;
+  # submitter is good!
+  return 1;
 }
 
 sub _validate_fact_struct {
-  my ($self, $struct) = @_;
+  my ($self, $struct, @approved) = @_;
 
+  # exists and has type
+  die "no fact provide" unless defined $struct;
+  die "fact type not provided" unless defined $struct->{metadata}{core}{type};
+
+  # approved fact type
+  my $type = $struct->{metadata}{core}{type};
+  unless ( grep { $type eq $_ } @approved ) {
+    die "$type is not an approved fact type\n";
+  }
+
+  # has content
   die "no content provided" unless defined $struct->{content};
 
-  for my $key ( qw/resource type schema_version guid creator_id/ ) {
+  # required metadata
+  for my $key ( qw/resource type schema_version guid creator creation_time/ ) {
     my $meta = $struct->{metadata}{core}{$key};
     die "no '$key' provided in core metadata"
       unless defined $meta;
-    die "invalid '$key' provided in core metadata"
-      unless ref $meta eq 'ARRAY';
     # XXX really should check meta validity: [ //str => 'abc' ], but lets wait
     # until we decide on sugar for metadata types -- dagolden, 2009-03-31
   }
 
   die "submissions must not include resource or content metadata"
     if $struct->{metadata}{content} or $struct->{metadata}{resource};
-}
 
-sub _check_permissions {
-  my ($self, $profile, $action, $fact) = @_;
-
-  # The devil may care, but we don't. -- rjbs, 2009-03-30
   return 1;
 }
 
-sub handle_submission {
-  my ($self, $struct) = @_;
+sub _check_permissions {
+  my ($self, $user_guid, $action, $fact) = @_;
 
-  my $fact_struct    = $struct->{fact};
-  my $profile_struct = $struct->{submitter};
+  # The devil may care, but we don't. -- rjbs, 2009-03-30
+
+  # E.g. do we let a user submit a fact they aren't listed as the creator for?
+  # -- dagolden, 2010-02-28
+
+  return 1;
+}
+
+sub _thaw_fact {
+  my ($self, $struct, @approved) = @_;
+
+  $self->_validate_fact_struct($struct, @approved);
+  my $type = $struct->{metadata}{core}{type};
+  return Metabase::Fact->class_from_type($type)->from_struct($struct);
+}
+
+# NOTE ON ERRORS: die with _fatal( XXX => reason => details )
+sub handle_submission {
+  my ($self, $struct, $user_guid, $user_secret) = @_;
 
   # use Data::Dumper;
   # local $SIG{__WARN__} = sub { warn "@_: " . Dumper($struct); };
 
-  my $profile = eval { $self->__submitter_profile($profile_struct) };
-  die "reason: $@" unless $profile;
+  # authenticate
+  unless ( eval { $self->_validate_submitter( $user_guid, $user_secret ); 1 } ) {
+    $self->_fatal( 401 => "unauthorized" => $@ );
+  }
 
-  $self->_validate_fact_struct($fact_struct);
+  # thaw
+  my $fact = eval { $self->_thaw_fact($struct, $self->approved_types) };
+  unless ( $fact ) {
+    $self->_fatal( 400 => "invalid submission data" => $@ );
+  }
 
-  my $type = $fact_struct->{metadata}{core}{type}[1];
+  # action allowed for this submitter for this fact
+  unless ( eval { $self->_check_permissions($user_guid => submit => $fact) } ) {
+    $self->_fatal( 400 => "cannot accept fact from current submitter" => $@ );
+  }
 
-  die "'$type' is not an approved fact type"
-    unless grep { $type eq $_ } $self->approved_types;
+  # accepted by librarian
+  my $guid = eval { $self->enqueue($fact) };
+  unless ( $guid ) {
+    $self->_fatal( 500 => "internal gateway error" => $@ );
+  }
 
-  my $class = Metabase::Fact->class_from_type($type);
+  return $guid;
+}
 
-  my $fact = eval { $class->from_struct($fact_struct) }
-    or die "Unable to create a '$class' object: $@";
+# NOTE ON ERRORS: die with _fatal( XXX => reason => details )
+sub handle_registration {
+  my ($self, $profile_struct, $secret_struct) = @_;
 
-  $self->_check_permissions($profile => submit => $fact);
+  $self->_fatal( 400 => "new user registration disabled" )
+    unless $self->allow_registration;
 
-  return $self->enqueue($fact, $profile);
+  # thaw profile
+  my $profile = eval { $self->_thaw_fact($profile_struct, 'Metabase-User-Profile') };
+  unless ( $profile ) {
+    $self->_fatal( 400 => "invalid submission data" => $@ );
+  }
+
+  # thaw secret
+  my $secret = eval { $self->_thaw_fact($secret_struct, 'Metabase-User-Secret') };
+  unless ( $secret ) {
+    $self->_fatal( 400 => "invalid submission data" => $@ );
+  }
+
+  # neither should exist
+  if ( $self->public_librarian->exists( $profile->guid )
+    || $self->private_librarian->exists( $secret->guid )
+  ) {
+    $self->_fatal( 400 => "already registered" );
+  }
+
+  # store with respective librarians
+  my ($secret_guid, $profile_guid);
+  eval {
+    $secret_guid = $self->private_librarian->store( $secret );
+    $profile_guid = $self->public_librarian->store( $profile );
+  };
+  unless ( $secret_guid && $profile_guid ) {
+    $self->_fatal( 500 => "internal gateway error" => $@ );
+  }
+
+  # profile accepted by librarian
+  return $profile_guid;
 }
 
 sub enqueue {
-  my ($self, $fact, $profile) = @_;
-  return $self->librarian->store($fact, $profile);
+  my ($self, $fact) = @_;
+  return $self->public_librarian->store($fact);
 }
+
 
 1;
 
@@ -176,16 +267,13 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 SYNOPSIS
 
-  my $mg = Metabase::Gateway->new( 
+  my $mg = Metabase::Gateway->new(
     fact_classes      => \@valid_fact_classes,
     librarian         => $librarian,
-    secret_librarian  => $secret_librarian,
+    private_librarian  => $private_librarian,
   );
 
-  $mg->handle_submission({
-    fact      => $fact_struct,
-    submitter => $profile_struct
-  });
+  $mg->handle_submission( $fact_struct, $user_guid, $user_secret);
 
 =head1 DESCRIPTION
 
@@ -197,14 +285,14 @@ new facts in a Metabase.
 
 =head2 C<new>
 
-  my $mg = Metabase::Gateway->new( 
+  my $mg = Metabase::Gateway->new(
     fact_classes      => \@valid_fact_classes,
-    librarian         => $librarian,
-    secret_librarian  => $secret_librarian,
+    public_librarian  => $public_librarian,
+    private_librarian  => $private_librarian,
   );
 
 Gateway constructor.  Takes three required attributes C<fact_classes>,
-C<librarian> and C<secret_librarian>.  See below for details.
+C<public_librarian> and C<private_librarian>.  See below for details.
 
 =head1 ATTRIBUTES
 
@@ -213,49 +301,61 @@ C<librarian> and C<secret_librarian>.  See below for details.
 Returns a list of approved fact types.  Automatically generated; cannot be
 initialized.  Used for validating submitted facts.
 
-=head2 C<autocreate_profile>
+A "type" is a class name with "::" converted to "-", so this attribute
+returns an arrayref of the C<fact_classes> attribute converted to types.
 
-A boolean option.  If true, if a submission is from an unknown user profile,
-the profile will be added to the Metabase.  If false, an exception will be thrown.
-Default is false.
+=head2 C<disable_security>
+
+A boolean option.  If true, submitter profiles will not be authenticated.
+(This is generally useful for testing, only.) Default is false.
+
+=head2 C<allow_registration>
+
+A boolean option.  If true, new submitter profiles and secrets may be
+stored. Default is true.
 
 =head2 C<fact_classes>
 
 Array reference containing a list of valid L<Metabase::Fact> subclasses. Only facts
 from these classes may be added to the Metabase. Required.
 
-=head2 C<librarian>
+=head2 C<public_librarian>
 
 A librarian object to manage fact data. Required.
 
-=head2 C<secret_librarian>
+=head2 C<private_librarian>
 
-A librarian object to manage user profile data.  This is generally kept in a separate
-data store to isolate user profile facts from public, searchable facts. Required.
+A librarian object to manage user authentication data and possibly other
+facts that should be segregated from searchable and retrievable facts.
+This should not be the same as the public_librarian.  Required.
 
 =head1 METHODS
 
 =head2 C<enqueue>
 
-  $mg->enqueue( $fact, $profile );
+  $mg->enqueue( $fact );
 
-Add a fact from a user (identified by a profile) to the Metabase the gateway is
-managing.  Used internally by handle_submission.
+Add a fact from a user (identified by a profile) via the public_librarian.
+Used internally by handle_submission.
 
 =head2 C<handle_submission>
 
-  $mg->handle_submission({
-    fact      => $fact_struct,
-    submitter => $profile_struct
-  });
+  $mg->handle_submission( $fact_struct, $user_guid, $user_secret);
 
-Extract a fact and profile from a deserialized data structure and add it to the
-Metabase. The fact and profile structs are generated from the C<as_struct> method.
+Extract a fact a deserialized data structure and add it to the Metabase via the
+public_librarian. The fact is regenerated from the C<as_struct> method.
 
-=head1 BUGS   
+=head2 C<handle_registration>
 
-Please report any bugs or feature using the CPAN Request Tracker.  
-Bugs can be submitted through the web interface at 
+  $mg->handle_registration( $profile_struct, $secret_struct );
+
+Extract a new user profile and secret from deserialized data structures
+and add them via the public_librarian and private_librarian, respectively.
+
+=head1 BUGS
+
+Please report any bugs or feature using the CPAN Request Tracker.
+Bugs can be submitted through the web interface at
 L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 
 When submitting a bug or request, please include a test-file or a patch to an
@@ -263,7 +363,7 @@ existing test-file that illustrates the bug or desired feature.
 
 =head1 AUTHOR
 
-=over 
+=over
 
 =item *
 
@@ -277,12 +377,12 @@ Ricardo J. B. Signes (RJBS)
 
 =head1 COPYRIGHT AND LICENSE
 
- Portions copyright (c) 2008-2009 by David A. Golden
- Portions copyright (c) 2008-2009 by Ricardo J. B. Signes
+ Portions Copyright (c) 2008-2010 by David A. Golden
+ Portions Copyright (c) 2008-2009 by Ricardo J. B. Signes
 
 Licensed under terms of Perl itself (the "License").
 You may not use this file except in compliance with the License.
-A copy of the License was distributed with this file or you may obtain a 
+A copy of the License was distributed with this file or you may obtain a
 copy of the License from http://dev.perl.org/licenses/
 
 Unless required by applicable law or agreed to in writing, software

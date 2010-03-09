@@ -11,9 +11,9 @@ use Moose::Util::TypeConstraints;
 use Carp ();
 use Fcntl ':flock';
 use IO::File ();
-use JSON::XS;
+use JSON 2 ();
 
-our $VERSION = '0.001';
+our $VERSION = '0.003';
 $VERSION = eval $VERSION;
 
 with 'Metabase::Index';
@@ -39,26 +39,11 @@ sub add {
     my ($self, $fact) = @_;
     Carp::confess( "can't index a Fact without a GUID" ) unless $fact->guid;
 
-    my %metadata = (
-      'core.type'           => [ '//str' => $fact->type            ],
-      'core.schema_version' => [ '//num' => $fact->schema_version  ],
-      'core.guid'           => [ '//str' => $fact->guid            ],
-      'core.created_at'     => [ '//num' => $fact->created_at      ],
-    );
-
-    for my $type (qw(content resource)) {
-      my $method = "$type\_metadata";
-      my $data   = $fact->$method || {};
-
-      for my $key (keys %$data) {
-        # I'm just starting with a strict-ish set.  We can tighten or loosen
-        # parts of this later. -- rjbs, 2009-03-28
-        die "invalid metadata key" unless $key =~ /\A[-_a-z0-9.]+\z/;
-        $metadata{ "$type.$key" } = $data->{$key};
-      }
-    }
+    my $metadata = $self->clone_metadata( $fact );
     
-    my $line = JSON::XS->new->encode(\%metadata);
+    my $line = eval {JSON->new->encode($metadata)};
+    Carp::confess "Error encoding JSON: $@"
+      unless $line;
 
     my $filename = $self->index_file;
 
@@ -78,10 +63,19 @@ sub add {
 sub search {
     my ($self, %spec) = @_;
 
+    # extract limit and ordering keys
+    my $limit = delete $spec{-limit};
+    my  %order;
+    for my $k ( qw/-asc -desc/ ) {
+      $order{$k} = delete $spec{$k} if exists $spec{$k};
+    }
+    if (scalar keys %order > 1) {
+      Carp::confess("Only one of '-asc' or '-desc' allowed");
+    }
+
     my $filename = $self->index_file;
     
     return [] unless -f $filename;
-
     my $fh = IO::File->new( $filename, "r" )
         or Carp::confess( "Couldn't read from '$filename': $!" );
     $fh->binmode(':raw');
@@ -90,8 +84,8 @@ sub search {
     flock $fh, LOCK_SH;
     {
         while ( my $line = <$fh> ) {
-            my $parsed = JSON::XS->new->decode($line);
-            push @matches, $parsed->{'core.guid'}[1] if _match($parsed, \%spec);
+            my $parsed = JSON->new->decode($line);
+            push @matches, $parsed->{'core.guid'} if _match($parsed, \%spec);
         }
     }    
     $fh->close;
@@ -101,7 +95,7 @@ sub search {
 
 sub exists {
     my ($self, $guid) = @_;
-    return scalar @{ $self->search( 'core.guid' => $guid ) };
+    return scalar @{ $self->search( 'core.guid' => lc $guid ) };
 }
 
 sub _match {
@@ -109,7 +103,7 @@ sub _match {
     for my $k ( keys %$spec ) {
         return unless defined($parsed->{$k}) 
                     && defined($spec->{$k}) 
-                    && $parsed->{$k}[1] eq $spec->{$k};
+                    && $parsed->{$k} eq $spec->{$k};
     }
     return 1;
 }

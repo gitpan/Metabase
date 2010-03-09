@@ -1,9 +1,7 @@
 Changes
 inc/Module/Install.pm
-inc/Module/Install/AutoManifest.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
-inc/Module/Install/ExtraTests.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
@@ -13,12 +11,14 @@ INSTALL
 lib/Metabase.pm
 lib/Metabase/Archive.pm
 lib/Metabase/Archive/Filesystem.pm
+lib/Metabase/Archive/S3.pm
 lib/Metabase/Archive/Schema.pm
 lib/Metabase/Archive/Schema/Fact.pm
 lib/Metabase/Archive/SQLite.pm
 lib/Metabase/Gateway.pm
 lib/Metabase/Index.pm
 lib/Metabase/Index/FlatFile.pm
+lib/Metabase/Index/SimpleDB.pm
 lib/Metabase/Index/Solr.pm
 lib/Metabase/Librarian.pm
 LICENSE
@@ -33,6 +33,7 @@ solr/solr_search.pl
 t/gateway/gateway.t
 t/index/base.t
 t/index/flatfile.t
+t/lib/Test/Metabase/Gateway.pm
 t/lib/Test/Metabase/Report.pm
 t/lib/Test/Metabase/StringFact.pm
 t/lib/Test/Metabase/Util.pm
