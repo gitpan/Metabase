@@ -15,7 +15,7 @@ use File::Slurp ();
 use JSON 2 ();
 use Path::Class ();
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 $VERSION = eval $VERSION;
 
 with 'Metabase::Archive';
@@ -50,7 +50,7 @@ sub store {
     File::Slurp::write_file( 
         $self->_guid_path( $guid ), 
         {binmode => ':raw'}, 
-        JSON->new->encode($fact_struct),
+        JSON::encode_json($fact_struct),
     );
 
     return $guid;
@@ -63,7 +63,7 @@ sub extract {
     my ($self, $guid) = @_;
     
     # read the fact
-    my $fact_struct = JSON->new->decode(
+    my $fact_struct = JSON::decode_json(
       File::Slurp::read_file(
         $self->_guid_path( $guid ),
         binmode => ':raw',
