@@ -1,44 +1,69 @@
-require 5.006;
-use inc::Module::Install;
-all_from('lib/Metabase.pm');
 
-requires ('CPAN::DistnameInfo'           => 0       );
-requires ('Carp'                         => 0       );
-requires ('Compress::Zlib'               => 2       );
-requires ('DBD::SQLite'                  => 1       );
-requires ('DBI'                          => 1       );
-requires ('DBIx::Class'                  => 0       );
-requires ('DBIx::Class::Schema'          => 0       );
-requires ('Data::GUID'                   => 0       );
-requires ('Fcntl'                        => 0       );
-requires ('File::Slurp'                  => 9999    );
-requires ('IO::File'                     => 0       );
-requires ('JSON'                         => 2       );
-requires ('Metabase::Fact'               => 0       );
-requires ('Metabase::User::Profile'      => 0       );
-requires ('Metabase::User::Secret'       => 0       );
-requires ('Moose'                        => 0       );
-requires ('Moose::Role'                  => 0       );
-requires ('Moose::Util::TypeConstraints' => 0       );
-requires ('MooseX::Types::Path::Class'   => 0       );
-requires ('Net::Amazon::S3'              => 0       );
-requires ('Path::Class'                  => 0       );
-requires ('SQL::Abstract'                => 1       );
-requires ('SimpleDB::Class::HTTP'        => 0       );
-requires ('Try::Tiny'                    => 0       );
-requires ('namespace::autoclean'         => 0       );
+use strict;
+use warnings;
 
-build_requires('File::Path'                   => 0       );
-build_requires('File::Temp'                   => 0.20    );
-build_requires('Metabase::Fact::String'       => 0       );
-build_requires('Metabase::Report'             => 0       );
-build_requires('Test::Exception'              => 0       );
-build_requires('Test::Moose'                  => 0       );
-build_requires('Test::More'                   => 0.88    );
-build_requires('perl'                         => 5.006   );
+ BEGIN { require 5.006; } 
 
-auto_manifest;
-tests_recursive;
-extra_tests;
+use ExtUtils::MakeMaker 6.11;
 
-WriteAll;
+
+
+my %WriteMakefileArgs = (
+                       'test' => {
+                                   'TESTS' => 't/gateway/*.t t/index/*.t t/librarian/*.t t/storage/*.t'
+                                 },
+                       'NAME' => 'Metabase',
+                       'DISTNAME' => 'Metabase',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.11'
+                                               },
+                       'AUTHOR' => 'David Golden <dagolden@cpan.org>, Ricardo Signes <rjbs@cpan.org>, Leon Brocard <acme@cpan.org>',
+                       'BUILD_REQUIRES' => {},
+                       'ABSTRACT' => 'A database framework and API for resource metadata',
+                       'EXE_FILES' => [],
+                       'VERSION' => '0.006',
+                       'PREREQ_PM' => {
+                                        'CPAN::DistnameInfo' => '0',
+                                        'Metabase::User::Profile' => '0',
+                                        'File::Path' => '0',
+                                        'DBI' => '1',
+                                        'Try::Tiny' => '0',
+                                        'SimpleDB::Class::HTTP' => '0',
+                                        'SQL::Abstract' => '1',
+                                        'Moose::Role' => '0',
+                                        'Test::Exception' => '0',
+                                        'IO::File' => '0',
+                                        'DBIx::Class::Schema' => '0',
+                                        'Test::More' => '0.88',
+                                        'MooseX::Types::Path::Class' => '0',
+                                        'File::Temp' => '0.20',
+                                        'Path::Class' => '0',
+                                        'Metabase::Fact::String' => '0',
+                                        'Compress::Zlib' => '2',
+                                        'DBD::SQLite' => '1',
+                                        'Fcntl' => '0',
+                                        'Metabase::User::Secret' => '0',
+                                        'Moose::Util::TypeConstraints' => '0',
+                                        'Data::GUID' => '0',
+                                        'Test::Moose' => '0',
+                                        'DBIx::Class' => '0',
+                                        'File::Slurp' => '9999',
+                                        'Metabase::Fact' => '0',
+                                        'Moose' => '0',
+                                        'namespace::autoclean' => '0',
+                                        'Net::Amazon::S3' => '0',
+                                        'Carp' => '0',
+                                        'Metabase::Report' => '0',
+                                        'JSON' => '2'
+                                      },
+                       'LICENSE' => 'apache'
+                     );
+
+
+delete $WriteMakefileArgs{LICENSE}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.31) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+

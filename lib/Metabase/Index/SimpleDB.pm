@@ -1,11 +1,24 @@
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
+
 package Metabase::Index::SimpleDB;
+our $VERSION = '0.006';
+# ABSTRACT: Metabase Amazon SimpleDB index
+
 use Moose;
 use SimpleDB::Class::HTTP;
 use SQL::Abstract;
 use Try::Tiny;
-
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
 
 with 'Metabase::Index';
 
@@ -219,13 +232,17 @@ sub delete {
 
 1;
 
-__END__
 
-=for Pod::Coverage::TrustPod add search exists
+
+=pod
 
 =head1 NAME
 
 Metabase::Index::SimpleDB - Metabase Amazon SimpleDB index
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -240,6 +257,8 @@ Metabase::Index::SimpleDB - Metabase Amazon SimpleDB index
 
 Metabase index using Amazon SimpleDB.
 
+=for Pod::Coverage::TrustPod add search exists delete count
+
 =head1 USAGE
 
 See L<Metabase::Index> and L<Metabase::Librarian>.
@@ -252,16 +271,6 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
-
-=head1 AUTHOR
-
-=over
-
-=item *
-
-Leon Brocard (ACME)
-
-=back
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -278,4 +287,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+=head1 AUTHORS
+
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+
 =cut
+
+
+__END__
+

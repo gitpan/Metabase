@@ -1,6 +1,19 @@
-package Metabase::Archive::Schema::Fact;
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
 use strict;
 use warnings;
+
+package Metabase::Archive::Schema::Fact;
+our $VERSION = '0.006';
+
 use base qw/DBIx::Class/;
 __PACKAGE__->load_components(qw/PK ResultSourceProxy::Table/);
 
@@ -28,3 +41,31 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('guid');
 
 1;
+
+__END__
+=pod
+
+=head1 NAME
+
+Metabase::Archive::Schema::Fact
+
+=head1 VERSION
+
+version 0.006
+
+=head1 AUTHORS
+
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+
+=cut
+

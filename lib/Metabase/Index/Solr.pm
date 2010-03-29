@@ -1,4 +1,20 @@
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
+
 package Metabase::Index::Solr;
+our $VERSION = '0.006';
+# ABSTRACT: Metabase Solr index
+
 use Moose;
 use WebService::Solr;
 
@@ -88,13 +104,17 @@ sub exists {
 
 1;
 
-__END__
 
-=for Pod::Coverage::TrustPod add search exists
+
+=pod
 
 =head1 NAME
 
 Metabase::Index::Solr - Metabase Solr index
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -108,6 +128,8 @@ Metabase::Index::Solr - Metabase Solr index
 
 Metabase index using L<WebService::Solr>.
 
+=for Pod::Coverage::TrustPod add search exists
+
 =head1 USAGE
 
 See L<Metabase::Index> and L<Metabase::Librarian>.
@@ -120,16 +142,6 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
-
-=head1 AUTHOR
-
-=over 
-
-=item *
-
-Leon Brocard (ACME)
-
-=back
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -146,4 +158,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+=head1 AUTHORS
+
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+
 =cut
+
+
+__END__
+

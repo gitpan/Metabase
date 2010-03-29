@@ -1,10 +1,20 @@
-# Copyright (c) 2008 by Ricardo Signes. All rights reserved.
-# Licensed under terms of Perl itself (the "License").
-# You may not use this file except in compliance with the License.
-# A copy of the License was distributed with this file or you may obtain a
-# copy of the License from http://dev.perl.org/licenses/
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
 
 package Metabase::Archive::SQLite;
+our $VERSION = '0.006';
+# ABSTRACT: Metabase storage using SQLite
+
 use Moose;
 use Moose::Util::TypeConstraints;
 use MooseX::Types::Path::Class;
@@ -18,9 +28,6 @@ use DBI         ();
 use DBD::SQLite ();
 use Compress::Zlib qw(compress uncompress);
 use Metabase::Archive::Schema;
-
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
 
 with 'Metabase::Archive';
 
@@ -70,7 +77,7 @@ sub store {
     }
 
     my $content = $fact_struct->{content};
-    my $json    = eval { JSON::encode_json($fact_struct->{metadata}{core}) };
+    my $json    = eval { JSON->new->ascii->encode($fact_struct->{metadata}{core}) };
     Carp::confess "Couldn't convert to JSON: $@"
       unless $json;
 
@@ -109,7 +116,7 @@ sub extract {
         $content = uncompress($content);
     }
 
-    my $meta = JSON::decode_json($json);
+    my $meta = JSON->new->ascii->decode($json);
 
     # reconstruct fact meta and extract type to find the class
     my $class = Metabase::Fact->class_from_type($type);
@@ -124,15 +131,17 @@ sub extract {
 
 1;
 
-__END__
+
 
 =pod
-
-=for Pod::Coverage::TrustPod store extract
 
 =head1 NAME
 
 Metabase::Archive::SQLite - Metabase storage using SQLite
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -145,6 +154,8 @@ Metabase::Archive::SQLite - Metabase storage using SQLite
 =head1 DESCRIPTION
 
 Store facts in a SQLite database.
+
+=for Pod::Coverage::TrustPod store extract
 
 =head1 USAGE
 
@@ -162,16 +173,6 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
 
-=head1 AUTHOR
-
-=over 
-
-=item *
-
-Leon Brocard (ACME)
-
-=back
-
 =head1 COPYRIGHT AND LICENSE
 
  Portions Copyright (c) 2008-2009 by Leon Brocard
@@ -187,4 +188,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+=head1 AUTHORS
+
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+
 =cut
+
+
+__END__
+

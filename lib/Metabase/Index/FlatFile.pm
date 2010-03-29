@@ -1,10 +1,20 @@
-# Copyright (c) 2008 by Ricardo Signes. All rights reserved.
-# Licensed under terms of Perl itself (the "License").
-# You may not use this file except in compliance with the License.
-# A copy of the License was distributed with this file or you may obtain a 
-# copy of the License from http://dev.perl.org/licenses/
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
 
 package Metabase::Index::FlatFile;
+our $VERSION = '0.006';
+# ABSTRACT: Metabase flat-file index
+
 use Moose;
 use Moose::Util::TypeConstraints;
 
@@ -12,9 +22,6 @@ use Carp ();
 use Fcntl ':flock';
 use IO::File ();
 use JSON 2 ();
-
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
 
 with 'Metabase::Index';
 
@@ -41,7 +48,7 @@ sub add {
 
     my $metadata = $self->clone_metadata( $fact );
     
-    my $line = eval {JSON::encode_json($metadata)};
+    my $line = eval {JSON->new->ascii->encode($metadata)};
     Carp::confess "Error encoding JSON: $@"
       unless $line;
 
@@ -84,7 +91,7 @@ sub search {
     flock $fh, LOCK_SH;
     {
         while ( my $line = <$fh> ) {
-            my $parsed = JSON::decode_json($line);
+            my $parsed = JSON->new->ascii->decode($line);
             push @matches, $parsed->{'core.guid'} if _match($parsed, \%spec);
         }
     }    
@@ -110,11 +117,17 @@ sub _match {
 
 1;
 
-=for Pod::Coverage::TrustPod add search exists
+
+__END__
+=pod
 
 =head1 NAME
 
 Metabase::Index::FlatFile - Metabase flat-file index
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -127,6 +140,8 @@ Metabase::Index::FlatFile - Metabase flat-file index
 =head1 DESCRIPTION
 
 Flat-file Metabase index.
+
+=for Pod::Coverage::TrustPod add search exists
 
 =head1 USAGE
 
@@ -141,34 +156,19 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-=over 
-
-=item *
-
-David A. Golden (DAGOLDEN)
-
-=item *
-
-Ricardo J. B. Signes (RJBS)
-
-=back
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
- Portions Copyright (c) 2008-2009 by David A. Golden
- Portions Copyright (c) 2008-2009 by Ricardo J. B. Signes
+This software is Copyright (c) 2010 by David Golden.
 
-Licensed under terms of Perl itself (the "License").
-You may not use this file except in compliance with the License.
-A copy of the License was distributed with this file or you may obtain a 
-copy of the License from http://dev.perl.org/licenses/
+This is free software, licensed under:
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  The Apache License, Version 2.0, January 2004
 
 =cut
+

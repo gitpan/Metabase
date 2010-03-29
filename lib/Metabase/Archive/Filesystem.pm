@@ -1,10 +1,20 @@
-# Copyright (c) 2008 by Ricardo Signes. All rights reserved.
-# Licensed under terms of Perl itself (the "License").
-# You may not use this file except in compliance with the License.
-# A copy of the License was distributed with this file or you may obtain a 
-# copy of the License from http://dev.perl.org/licenses/
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
 
 package Metabase::Archive::Filesystem;
+our $VERSION = '0.006';
+# ABSTRACT: Metabase filesystem-based storage
+
 use Moose;
 use Moose::Util::TypeConstraints;
 
@@ -14,9 +24,6 @@ use Data::GUID ();
 use File::Slurp ();
 use JSON 2 ();
 use Path::Class ();
-
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
 
 with 'Metabase::Archive';
 
@@ -50,7 +57,7 @@ sub store {
     File::Slurp::write_file( 
         $self->_guid_path( $guid ), 
         {binmode => ':raw'}, 
-        JSON::encode_json($fact_struct),
+        JSON->new->ascii->encode($fact_struct),
     );
 
     return $guid;
@@ -63,7 +70,7 @@ sub extract {
     my ($self, $guid) = @_;
     
     # read the fact
-    my $fact_struct = JSON::decode_json(
+    my $fact_struct = JSON->new->ascii->decode(
       File::Slurp::read_file(
         $self->_guid_path( $guid ),
         binmode => ':raw',
@@ -88,15 +95,17 @@ sub _guid_path {
 
 1;
 
-__END__
+
 
 =pod
-
-=for Pod::Coverage::TrustPod store extract
 
 =head1 NAME
 
 Metabase::Archive::Filesystem - Metabase filesystem-based storage
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -111,6 +120,8 @@ Metabase::Archive::Filesystem - Metabase filesystem-based storage
 Store facts as files in the filesystem, hashed into a directory tree by GUID to
 manage the number of files in any particular directory.
 
+=for Pod::Coverage store extract
+
 =head1 USAGE
 
 See L<Metabase::Archive> and L<Metabase::Librarian>.
@@ -124,34 +135,22 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-=over 
-
-=item *
-
-David A. Golden (DAGOLDEN)
-
-=item *
-
-Ricardo J. B. Signes (RJBS)
-
-=back
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
- Portions Copyright (c) 2008-2009 by David A. Golden
- Portions Copyright (c) 2008-2009 by Ricardo J. B. Signes
+This software is Copyright (c) 2010 by David Golden.
 
-Licensed under terms of Perl itself (the "License").
-You may not use this file except in compliance with the License.
-A copy of the License was distributed with this file or you may obtain a 
-copy of the License from http://dev.perl.org/licenses/
+This is free software, licensed under:
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  The Apache License, Version 2.0, January 2004
 
 =cut
+
+
+__END__
+

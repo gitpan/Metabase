@@ -1,10 +1,20 @@
-# Copyright (c) 2008 by Ricardo Signes. All rights reserved.
-# Licensed under terms of Perl itself (the "License").
-# You may not use this file except in compliance with the License.
-# A copy of the License was distributed with this file or you may obtain a
-# copy of the License from http://dev.perl.org/licenses/
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
 
 package Metabase::Archive::S3;
+our $VERSION = '0.006';
+# ABSTRACT: Metabase storage using Amazon S3
+
 use Moose;
 use Moose::Util::TypeConstraints;
 use MooseX::Types::Path::Class;
@@ -16,9 +26,6 @@ use JSON 2 ();
 use Net::Amazon::S3;
 use Path::Class ();
 use Compress::Zlib qw(compress uncompress);
-
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
 
 with 'Metabase::Archive';
 
@@ -70,6 +77,13 @@ has 's3_bucket' => (
     }
 );
 
+has '_json' => (
+  is => 'ro',
+  required => 1,
+  lazy => 1,
+  default => sub { JSON->new->ascii },
+);
+
 # given fact, store it and return guid;
 sub store {
     my ( $self, $fact_struct ) = @_;
@@ -80,7 +94,7 @@ sub store {
         Carp::confess "Can't store: no GUID set for fact\n";
     }
 
-    my $json = JSON::encode_json($fact_struct);
+    my $json = $self->_json->encode($fact_struct);
 
     if ( $self->compressed ) {
         $json = compress($json);
@@ -109,7 +123,7 @@ sub extract {
         $json = uncompress($json);
     }
 
-    my $object  = JSON::decode_json($json);
+    my $object  = $self->_json->decode($json);
 
     return $object;
 }
@@ -124,15 +138,17 @@ sub delete {
 
 1;
 
-__END__
+
 
 =pod
-
-=for Pod::Coverage::TrustPod store extract
 
 =head1 NAME
 
 Metabase::Archive::S3 - Metabase storage using Amazon S3
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -148,6 +164,8 @@ Metabase::Archive::S3 - Metabase storage using Amazon S3
 =head1 DESCRIPTION
 
 Store facts in Amazon S3.
+
+=for Pod::Coverage::TrustPod store extract delete
 
 =head1 USAGE
 
@@ -165,16 +183,6 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
 
-=head1 AUTHOR
-
-=over
-
-=item *
-
-Leon Brocard (ACME)
-
-=back
-
 =head1 COPYRIGHT AND LICENSE
 
 Portions Copyright (c) 2010 by Leon Brocard
@@ -190,4 +198,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+=head1 AUTHORS
+
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by David Golden.
+
+This is free software, licensed under:
+
+  The Apache License, Version 2.0, January 2004
+
 =cut
+
+
+__END__
+

@@ -1,10 +1,20 @@
-# Copyright (c) 2008-2009 by Ricardo Signes and David Golden. All rights reserved.
-# Licensed under terms of Perl itself (the "License").
-# You may not use this file except in compliance with the License.
-# A copy of the License was distributed with this file or you may obtain a 
-# copy of the License from http://dev.perl.org/licenses/
+# 
+# This file is part of Metabase
+# 
+# This software is Copyright (c) 2010 by David Golden.
+# 
+# This is free software, licensed under:
+# 
+#   The Apache License, Version 2.0, January 2004
+# 
+use 5.006;
+use strict;
+use warnings;
 
 package Metabase::Librarian;
+our $VERSION = '0.006';
+# ABSTRACT: Front-end interface to Metabase storage
+
 use Moose;
 use Moose::Util::TypeConstraints;
 use Carp ();
@@ -13,9 +23,6 @@ use Metabase::Archive;
 use Metabase::Index;
 use Data::GUID ();
 use JSON 2 ();
-
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
 
 has 'archive' => (
     is => 'ro', 
@@ -56,7 +63,7 @@ sub store {
       for my $f ( $fact->facts ) {
         push @fact_guids, $self->store( $f );
       }
-      $fact_struct->{content} = JSON::encode_json(\@fact_guids);
+      $fact_struct->{content} = JSON->new->ascii->encode(\@fact_guids);
     }
 
     if ( $self->archive->store( $fact_struct ) 
@@ -91,14 +98,14 @@ sub extract {
     # following block is a wretched hack. -- rjbs, 2009-06-24
     if ($class->isa('Metabase::Report')) {
       my @facts;
-      my $content = JSON::decode_json( $fact_struct->{content} );
+      my $content = JSON->new->ascii->decode( $fact_struct->{content} );
       for my $g ( @$content ) {
         # XXX no error checking if extract() fails -- dagolden, 2009-04-09
         push @facts, $self->extract( $g ); 
       }
 
       my $bogus_content = [ map { $_->as_struct } @facts ];
-      my $bogus_string  = JSON::encode_json( $bogus_content );
+      my $bogus_string  = JSON->new->ascii->encode( $bogus_content );
 
       $fact = $class->from_struct({
         metadata => { core => $fact_struct->{metadata}{core} },
@@ -127,13 +134,17 @@ sub delete {
 
 1;
 
-__END__
+
 
 =pod
 
 =head1 NAME
 
-Metabase::Librarian - front-end interface to Metabase storage
+Metabase::Librarian - Front-end interface to Metabase storage
+
+=head1 VERSION
+
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -142,11 +153,12 @@ Metabase::Librarian - front-end interface to Metabase storage
     index => $index,
   );
 
-
 =head1 DESCRIPTION
 
 The Metabase::Librarian class provides a front-end interface to user-defined
 Metabase storage and indexing objects.
+
+=for Pod::Coverage delete
 
 =head1 USAGE
 
@@ -191,6 +203,8 @@ See L<Metabase::Index> for spec details.
 
 =head1 BUGS
 
+I<...no human would stack books this way...>
+
 Please report any bugs or feature using the CPAN Request Tracker.  
 Bugs can be submitted through the web interface at 
 L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
@@ -198,36 +212,22 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 When submitting a bug or request, please include a test-file or a patch to an
 existing test-file that illustrates the bug or desired feature.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-=over 
-
-=item *
-
-David A. Golden (DAGOLDEN)
-
-=item *
-
-Ricardo J. B. Signes (RJBS)
-
-=back
-
-I<...no human would stack books this way...>
+  David Golden <dagolden@cpan.org>
+  Ricardo Signes <rjbs@cpan.org>
+  Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
- Portions copyright (c) 2008-2009 by David A. Golden
- Portions copyright (c) 2008-2009 by Ricardo J. B. Signes
+This software is Copyright (c) 2010 by David Golden.
 
-Licensed under terms of Perl itself (the "License").
-You may not use this file except in compliance with the License.
-A copy of the License was distributed with this file or you may obtain a 
-copy of the License from http://dev.perl.org/licenses/
+This is free software, licensed under:
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+  The Apache License, Version 2.0, January 2004
 
 =cut
+
+
+__END__
+
