@@ -34,6 +34,6 @@ t/librarian/report.t
 t/librarian/simple.t
 t/storage/base.t
 t/storage/filesystem.t
-xt/release/meta-yaml.t
+xt/release/distmeta.t
 xt/release/pod-coverage.t
 xt/release/pod-syntax.t

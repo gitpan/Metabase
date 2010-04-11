@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Gateway;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Gateway::VERSION = '0.007';
+}
 # ABSTRACT: Manage Metabase fact submission
 
 use Moose::Role;
@@ -283,7 +285,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Archive::Schema;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Archive::Schema::VERSION = '0.007';
+}
 use strict;
 use warnings;
 use base qw/DBIx::Class::Schema/;
@@ -30,7 +32,7 @@ Metabase::Archive::Schema
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 AUTHORS
 

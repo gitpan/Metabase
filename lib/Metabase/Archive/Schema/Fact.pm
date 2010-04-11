@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Archive::Schema::Fact;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Archive::Schema::Fact::VERSION = '0.007';
+}
 
 use base qw/DBIx::Class/;
 __PACKAGE__->load_components(qw/PK ResultSourceProxy::Table/);
@@ -51,7 +53,7 @@ Metabase::Archive::Schema::Fact
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 AUTHORS
 

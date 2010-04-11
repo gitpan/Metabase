@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Index::SimpleDB;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Index::SimpleDB::VERSION = '0.007';
+}
 # ABSTRACT: Metabase Amazon SimpleDB index
 
 use Moose;
@@ -242,7 +244,7 @@ Metabase::Index::SimpleDB - Metabase Amazon SimpleDB index
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

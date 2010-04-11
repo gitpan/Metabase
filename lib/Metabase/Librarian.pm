@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Librarian;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Librarian::VERSION = '0.007';
+}
 # ABSTRACT: Front-end interface to Metabase storage
 
 use Moose;
@@ -144,7 +146,7 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

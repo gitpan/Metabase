@@ -8,7 +8,6 @@
 #   The Apache License, Version 2.0, January 2004
 # 
 package Test::Metabase::Util;
-our $VERSION = '0.006';
 use Moose;
 
 use lib 'lib';

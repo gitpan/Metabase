@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Index::Solr;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Index::Solr::VERSION = '0.007';
+}
 # ABSTRACT: Metabase Solr index
 
 use Moose;
@@ -114,7 +116,7 @@ Metabase::Index::Solr - Metabase Solr index
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

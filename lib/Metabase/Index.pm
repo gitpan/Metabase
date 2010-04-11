@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Index;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Index::VERSION = '0.007';
+}
 # ABSTRACT: Interface for Metabase indexing
 
 use Moose::Role;
@@ -61,7 +63,7 @@ Metabase::Index - Interface for Metabase indexing
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

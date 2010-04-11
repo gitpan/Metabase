@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Index::FlatFile;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Index::FlatFile::VERSION = '0.007';
+}
 # ABSTRACT: Metabase flat-file index
 
 use Moose;
@@ -127,7 +129,7 @@ Metabase::Index::FlatFile - Metabase flat-file index
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

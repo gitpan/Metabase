@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Archive::S3;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Archive::S3::VERSION = '0.007';
+}
 # ABSTRACT: Metabase storage using Amazon S3
 
 use Moose;
@@ -28,6 +30,14 @@ use Path::Class ();
 use Compress::Zlib qw(compress uncompress);
 
 with 'Metabase::Archive';
+
+# Prefix string must have a trailing slash but not leading slash
+subtype 'PrefixStr'
+  => as 'Str'
+  => where { $_ =~ m{^\w} && $_ =~ m{/$} };
+
+coerce 'PrefixStr'
+  => from 'Str' => via { s{/$}{}; s{^/}{}; $_ . "/" };
 
 has 'access_key_id' => (
     is       => 'ro',
@@ -49,8 +59,9 @@ has 'bucket' => (
 
 has 'prefix' => (
     is       => 'ro',
-    isa      => 'Str',
+    isa      => 'PrefixStr',
     required => 1,
+    coerce   => 1,
 );
 
 has 'compressed' => (
@@ -148,7 +159,7 @@ Metabase::Archive::S3 - Metabase storage using Amazon S3
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

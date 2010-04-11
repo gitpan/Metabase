@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::VERSION = '0.007';
+}
 # ABSTRACT: A database framework and API for resource metadata
 
 
@@ -28,7 +30,7 @@ Metabase - A database framework and API for resource metadata
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 DESCRIPTION
 

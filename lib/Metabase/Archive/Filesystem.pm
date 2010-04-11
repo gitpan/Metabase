@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Archive::Filesystem;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Archive::Filesystem::VERSION = '0.007';
+}
 # ABSTRACT: Metabase filesystem-based storage
 
 use Moose;
@@ -105,7 +107,7 @@ Metabase::Archive::Filesystem - Metabase filesystem-based storage
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 

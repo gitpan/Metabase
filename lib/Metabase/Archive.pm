@@ -12,7 +12,9 @@ use strict;
 use warnings;
 
 package Metabase::Archive;
-our $VERSION = '0.006';
+BEGIN {
+  $Metabase::Archive::VERSION = '0.007';
+}
 # ABSTRACT: Interface for Metabase storage
 
 use Moose::Role;
@@ -32,7 +34,7 @@ Metabase::Archive - Interface for Metabase storage
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
