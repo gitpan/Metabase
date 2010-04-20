@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Index::Solr;
 BEGIN {
-  $Metabase::Index::Solr::VERSION = '0.007';
+  $Metabase::Index::Solr::VERSION = '0.008';
 }
 # ABSTRACT: Metabase Solr index
 
@@ -116,7 +116,7 @@ Metabase::Index::Solr - Metabase Solr index
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 

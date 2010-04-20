@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Gateway;
 BEGIN {
-  $Metabase::Gateway::VERSION = '0.007';
+  $Metabase::Gateway::VERSION = '0.008';
 }
 # ABSTRACT: Manage Metabase fact submission
 
@@ -285,7 +285,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
