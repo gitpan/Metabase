@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Index;
 BEGIN {
-  $Metabase::Index::VERSION = '0.008';
+  $Metabase::Index::VERSION = '0.009';
 }
 # ABSTRACT: Interface for Metabase indexing
 
@@ -35,7 +35,8 @@ sub clone_metadata {
     my $method = "$type\_metadata";
     my $data   = $fact->$method || {};
 
-    for my $key (keys %$data) {
+    KEY: for my $key (keys %$data) {
+      next KEY unless defined $data->{$key};
       # I'm just starting with a strict-ish set.  We can tighten or loosen
       # parts of this later. -- rjbs, 2009-03-28
       die "invalid metadata key '$key'" unless $key =~ /\A[-_a-z0-9.]+\z/i;
@@ -63,7 +64,7 @@ Metabase::Index - Interface for Metabase indexing
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 SYNOPSIS
 

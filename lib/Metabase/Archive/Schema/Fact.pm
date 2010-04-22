@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::Schema::Fact;
 BEGIN {
-  $Metabase::Archive::Schema::Fact::VERSION = '0.008';
+  $Metabase::Archive::Schema::Fact::VERSION = '0.009';
 }
 
 use base qw/DBIx::Class/;
@@ -53,7 +53,7 @@ Metabase::Archive::Schema::Fact
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 AUTHORS
 
