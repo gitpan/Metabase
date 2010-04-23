@@ -2,7 +2,7 @@ NAME
     Metabase - A database framework and API for resource metadata
 
 VERSION
-    version 0.009
+    version 0.010
 
 DESCRIPTION
     Metabase is a database framework and API for resource metadata. The
