@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Index;
 BEGIN {
-  $Metabase::Index::VERSION = '0.011';
+  $Metabase::Index::VERSION = '0.012';
 }
 # ABSTRACT: Interface for Metabase indexing
 
@@ -64,7 +64,7 @@ Metabase::Index - Interface for Metabase indexing
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 

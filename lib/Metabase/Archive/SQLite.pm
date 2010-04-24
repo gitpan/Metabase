@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::SQLite;
 BEGIN {
-  $Metabase::Archive::SQLite::VERSION = '0.011';
+  $Metabase::Archive::SQLite::VERSION = '0.012';
 }
 # ABSTRACT: Metabase storage using SQLite
 
@@ -143,7 +143,7 @@ Metabase::Archive::SQLite - Metabase storage using SQLite
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 

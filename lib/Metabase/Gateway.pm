@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Gateway;
 BEGIN {
-  $Metabase::Gateway::VERSION = '0.011';
+  $Metabase::Gateway::VERSION = '0.012';
 }
 # ABSTRACT: Manage Metabase fact submission
 
@@ -161,8 +161,9 @@ sub _validate_submitter {
       }
       my $obj = $self->private_librarian->extract($found->[0]);
       # if we haven't died, we have it, so cache it
+      $secret = $obj->content;
       $self->_cache->set(
-        "secret/$user_guid", $obj->content, $self->authentication_timeout
+        "secret/$user_guid", $secret, $self->authentication_timeout
       );
     };
   }
@@ -315,7 +316,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 
