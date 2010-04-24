@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Gateway;
 BEGIN {
-  $Metabase::Gateway::VERSION = '0.010';
+  $Metabase::Gateway::VERSION = '0.011';
 }
 # ABSTRACT: Manage Metabase fact submission
 
@@ -90,7 +90,7 @@ has cache_options => (
 
 has _cache => (
   is          => 'ro',
-  isa         => 'CHI',
+  isa         => 'CHI::Driver',
   lazy        => 1,
   builder     => '_build_cache',
 );
@@ -159,17 +159,17 @@ sub _validate_submitter {
       unless ( defined $found->[0] ) {
         die "credentials for $user_resource not found\n";
       }
-      $secret = $self->private_librarian->extract($found->[0]);
+      my $obj = $self->private_librarian->extract($found->[0]);
       # if we haven't died, we have it, so cache it
       $self->_cache->set(
-        "secret/$user_guid", $secret, $self->authentication_timeout
+        "secret/$user_guid", $obj->content, $self->authentication_timeout
       );
     };
   }
 
   # match against submitted secret
   die "authentication failed for $user_resource\n"
-    unless defined $secret && $user_secret eq $secret->content;
+    unless defined $secret && $user_secret eq $secret;
 
   # submitter is good!
   return 1;
@@ -315,7 +315,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 

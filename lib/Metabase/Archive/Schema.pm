@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::Schema;
 BEGIN {
-  $Metabase::Archive::Schema::VERSION = '0.010';
+  $Metabase::Archive::Schema::VERSION = '0.011';
 }
 use strict;
 use warnings;
@@ -32,7 +32,7 @@ Metabase::Archive::Schema
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 AUTHORS
 

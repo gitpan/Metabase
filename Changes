@@ -1,5 +1,11 @@
 Revision history for Metabase
 
+0.011     2010-04-23 23:38:58 EST5EDT
+
+    - Fix cache attribute type constraint
+
+    - Cache authentication strings, not objects
+
 0.010     2010-04-23 17:40:39 EST5EDT
 
     - Add authentication caching.  Adds CHI as a prereq

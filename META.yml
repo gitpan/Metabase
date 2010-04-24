@@ -21,43 +21,43 @@ no_index:
 provides:
   Metabase:
     file: lib/Metabase.pm
-    version: 0.010
+    version: 0.011
   Metabase::Archive:
     file: lib/Metabase/Archive.pm
-    version: 0.010
+    version: 0.011
   Metabase::Archive::Filesystem:
     file: lib/Metabase/Archive/Filesystem.pm
-    version: 0.010
+    version: 0.011
   Metabase::Archive::S3:
     file: lib/Metabase/Archive/S3.pm
-    version: 0.010
+    version: 0.011
   Metabase::Archive::SQLite:
     file: lib/Metabase/Archive/SQLite.pm
-    version: 0.010
+    version: 0.011
   Metabase::Archive::Schema:
     file: lib/Metabase/Archive/Schema.pm
-    version: 0.010
+    version: 0.011
   Metabase::Archive::Schema::Fact:
     file: lib/Metabase/Archive/Schema/Fact.pm
-    version: 0.010
+    version: 0.011
   Metabase::Gateway:
     file: lib/Metabase/Gateway.pm
-    version: 0.010
+    version: 0.011
   Metabase::Index:
     file: lib/Metabase/Index.pm
-    version: 0.010
+    version: 0.011
   Metabase::Index::FlatFile:
     file: lib/Metabase/Index/FlatFile.pm
-    version: 0.010
+    version: 0.011
   Metabase::Index::SimpleDB:
     file: lib/Metabase/Index/SimpleDB.pm
-    version: 0.010
+    version: 0.011
   Metabase::Index::Solr:
     file: lib/Metabase/Index/Solr.pm
-    version: 0.010
+    version: 0.011
   Metabase::Librarian:
     file: lib/Metabase/Librarian.pm
-    version: 0.010
+    version: 0.011
 recommends: {}
 requires:
   CHI: 0
@@ -96,4 +96,4 @@ requires:
   perl: 5.006
 resources:
   repository: http://github.com/dagolden/metabase
-version: 0.010
+version: 0.011
