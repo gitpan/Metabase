@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::Filesystem;
 BEGIN {
-  $Metabase::Archive::Filesystem::VERSION = '0.012';
+  $Metabase::Archive::Filesystem::VERSION = '0.013';
 }
 # ABSTRACT: Metabase filesystem-based storage
 
@@ -107,7 +107,7 @@ Metabase::Archive::Filesystem - Metabase filesystem-based storage
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 
@@ -139,9 +139,21 @@ existing test-file that illustrates the bug or desired feature.
 
 =head1 AUTHORS
 
-  David Golden <dagolden@cpan.org>
-  Ricardo Signes <rjbs@cpan.org>
-  Leon Brocard <acme@cpan.org>
+=over 4
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=item *
+
+Ricardo Signes <rjbs@cpan.org>
+
+=item *
+
+Leon Brocard <acme@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

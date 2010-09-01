@@ -7,7 +7,8 @@ author:
 build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: 6.31
-generated_by: 'Dist::Zilla version 2.101040'
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.101900, CPAN::Meta::Converter version 2.102160'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -21,44 +22,43 @@ no_index:
 provides:
   Metabase:
     file: lib/Metabase.pm
-    version: 0.012
+    version: 0.013
   Metabase::Archive:
     file: lib/Metabase/Archive.pm
-    version: 0.012
+    version: 0.013
   Metabase::Archive::Filesystem:
     file: lib/Metabase/Archive/Filesystem.pm
-    version: 0.012
+    version: 0.013
   Metabase::Archive::S3:
     file: lib/Metabase/Archive/S3.pm
-    version: 0.012
+    version: 0.013
   Metabase::Archive::SQLite:
     file: lib/Metabase/Archive/SQLite.pm
-    version: 0.012
+    version: 0.013
   Metabase::Archive::Schema:
     file: lib/Metabase/Archive/Schema.pm
-    version: 0.012
+    version: 0.013
   Metabase::Archive::Schema::Fact:
     file: lib/Metabase/Archive/Schema/Fact.pm
-    version: 0.012
+    version: 0.013
   Metabase::Gateway:
     file: lib/Metabase/Gateway.pm
-    version: 0.012
+    version: 0.013
   Metabase::Index:
     file: lib/Metabase/Index.pm
-    version: 0.012
+    version: 0.013
   Metabase::Index::FlatFile:
     file: lib/Metabase/Index/FlatFile.pm
-    version: 0.012
+    version: 0.013
   Metabase::Index::SimpleDB:
     file: lib/Metabase/Index/SimpleDB.pm
-    version: 0.012
+    version: 0.013
   Metabase::Index::Solr:
     file: lib/Metabase/Index/Solr.pm
-    version: 0.012
+    version: 0.013
   Metabase::Librarian:
     file: lib/Metabase/Librarian.pm
-    version: 0.012
-recommends: {}
+    version: 0.013
 requires:
   CHI: 0
   CPAN::DistnameInfo: 0
@@ -69,13 +69,14 @@ requires:
   DBIx::Class: 0
   DBIx::Class::Schema: 0
   Data::GUID: 0
+  Data::Stream::Bulk: 0
   Fcntl: 0
   File::Path: 0
   File::Slurp: 9999
   File::Temp: 0.20
   IO::File: 0
   JSON: 2
-  Metabase::Fact: 0
+  Metabase::Fact: 0.018
   Metabase::Fact::String: 0
   Metabase::Report: 0
   Metabase::User::Profile: 0
@@ -96,4 +97,4 @@ requires:
   perl: 5.006
 resources:
   repository: http://github.com/dagolden/metabase
-version: 0.012
+version: 0.013

@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Gateway;
 BEGIN {
-  $Metabase::Gateway::VERSION = '0.012';
+  $Metabase::Gateway::VERSION = '0.013';
 }
 # ABSTRACT: Manage Metabase fact submission
 
@@ -118,7 +118,7 @@ sub _build_approved_types {
 sub _fatal {
   my ($self, $code, $reason, $details) = @_;
   $code ||= 500;
-  $reason ||= "internal gateway error";
+  $reason ||= "unknown error";
   $details ||= '';
   chomp $details;
   my $message = "$code\: $reason";
@@ -252,7 +252,7 @@ sub handle_submission {
   # accepted by librarian
   my $guid = eval { $self->enqueue($fact) };
   unless ( $guid ) {
-    $self->_fatal( 500 => "internal gateway error" => $@ );
+    $self->_fatal( 500 => "submission was not stored" => $@ );
   }
 
   return $guid;
@@ -268,13 +268,13 @@ sub handle_registration {
   # thaw profile
   my $profile = eval { $self->_thaw_fact($profile_struct, 'Metabase-User-Profile') };
   unless ( $profile ) {
-    $self->_fatal( 400 => "invalid submission data" => $@ );
+    $self->_fatal( 400 => "invalid registration profile" => $@ );
   }
 
   # thaw secret
   my $secret = eval { $self->_thaw_fact($secret_struct, 'Metabase-User-Secret') };
   unless ( $secret ) {
-    $self->_fatal( 400 => "invalid submission data" => $@ );
+    $self->_fatal( 400 => "invalid registration credential" => $@ );
   }
 
   # neither should exist
@@ -291,7 +291,7 @@ sub handle_registration {
     $profile_guid = $self->public_librarian->store( $profile );
   };
   unless ( $secret_guid && $profile_guid ) {
-    $self->_fatal( 500 => "internal gateway error" => $@ );
+    $self->_fatal( 500 => "registration failed" => $@ );
   }
 
   # profile accepted by librarian
@@ -316,7 +316,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 
@@ -440,9 +440,21 @@ existing test-file that illustrates the bug or desired feature.
 
 =head1 AUTHORS
 
-  David Golden <dagolden@cpan.org>
-  Ricardo Signes <rjbs@cpan.org>
-  Leon Brocard <acme@cpan.org>
+=over 4
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=item *
+
+Ricardo Signes <rjbs@cpan.org>
+
+=item *
+
+Leon Brocard <acme@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

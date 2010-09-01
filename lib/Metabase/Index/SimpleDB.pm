@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Index::SimpleDB;
 BEGIN {
-  $Metabase::Index::SimpleDB::VERSION = '0.012';
+  $Metabase::Index::SimpleDB::VERSION = '0.013';
 }
 # ABSTRACT: Metabase Amazon SimpleDB index
 
@@ -92,7 +92,8 @@ sub add {
         push @attributes,
             "Attribute.$i.Name"    => $key,
             "Attribute.$i.Value"   => $value,
-            "Attribute.$i.Replace" => 'true';
+            # XXX not using replace is an optimization -- dagolden, 2010-04-29
+#            "Attribute.$i.Replace" => 'true'; # XXX optimization -- dagolden, 2010-04-29
         $i++;
     }
 
@@ -244,7 +245,7 @@ Metabase::Index::SimpleDB - Metabase Amazon SimpleDB index
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 
@@ -291,9 +292,21 @@ limitations under the License.
 
 =head1 AUTHORS
 
-  David Golden <dagolden@cpan.org>
-  Ricardo Signes <rjbs@cpan.org>
-  Leon Brocard <acme@cpan.org>
+=over 4
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=item *
+
+Ricardo Signes <rjbs@cpan.org>
+
+=item *
+
+Leon Brocard <acme@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

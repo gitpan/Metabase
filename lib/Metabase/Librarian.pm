@@ -13,32 +13,34 @@ use warnings;
 
 package Metabase::Librarian;
 BEGIN {
-  $Metabase::Librarian::VERSION = '0.012';
+  $Metabase::Librarian::VERSION = '0.013';
 }
 # ABSTRACT: Front-end interface to Metabase storage
 
 use Moose;
 use Moose::Util::TypeConstraints;
+use Class::MOP ();
 use Carp ();
 use CPAN::DistnameInfo;
+use Data::Stream::Bulk::Filter ();
 use Metabase::Archive;
 use Metabase::Index;
 use Data::GUID ();
 use JSON 2 ();
 
 has 'archive' => (
-    is => 'ro', 
+    is => 'ro',
     isa => 'Metabase::Archive',
-    required => 1, 
+    required => 1,
 );
 
 has 'index' => (
-    is => 'ro', 
+    is => 'ro',
     isa => 'Metabase::Index',
-    required => 1, 
+    required => 1,
 );
 
-# given fact, store it and return guid; 
+# given fact, store it and return guid;
 sub store {
     my ($self, $fact) = @_;
 
@@ -68,7 +70,7 @@ sub store {
       $fact_struct->{content} = JSON->new->ascii->encode(\@fact_guids);
     }
 
-    if ( $self->archive->store( $fact_struct ) 
+    if ( $self->archive->store( $fact_struct )
       && $self->index  ->add  ( $fact ) ) {
         return $fact->guid;
     } else {
@@ -83,17 +85,24 @@ sub search {
 
 sub extract {
     my ($self, $guid) = @_;
-    my $fact;
-
     my $fact_struct = $self->archive->extract( lc $guid );
 
     Carp::confess "Fact $guid does not exist" unless $fact_struct;
+
+    return $self->_thaw_fact( $fact_struct );
+}
+
+sub _thaw_fact {
+    my ($self, $fact_struct) = @_;
+    my $fact;
 
     # reconstruct fact meta and extract type to find the class
     my $class = Metabase::Fact->class_from_type(
       $fact_struct->{metadata}{core}{type}
     );
-    
+
+    Class::MOP::load_class( $class );
+
     # XXX: The problem here is that what we get out of the librarian isn't
     # exactly what we put in, it seems.  We need to improve the specification
     # for what goes in/out and then test it more thoroughly.  *Clearly* the
@@ -103,7 +112,7 @@ sub extract {
       my $content = JSON->new->ascii->decode( $fact_struct->{content} );
       for my $g ( @$content ) {
         # XXX no error checking if extract() fails -- dagolden, 2009-04-09
-        push @facts, $self->extract( $g ); 
+        push @facts, $self->extract( $g );
       }
 
       my $bogus_content = [ map { $_->as_struct } @facts ];
@@ -126,6 +135,16 @@ sub exists {
     return $self->index->exists( lc $guid );
 }
 
+sub iterator {
+  my ($self) = @_;
+  return Data::Stream::Bulk::Filter->new(
+    stream => $self->archive->iterator,
+    filter => sub {
+      return [ map { $self->_thaw_fact( $_ ) } @{ $_[0] } ];
+    },
+  );
+}
+
 # DO NOT lc() the GUID -- we must allow deletion of improperly cased GUIDS from source
 sub delete {
     my ($self, $guid) = @_;
@@ -146,11 +165,11 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 0.012
+version 0.013
 
 =head1 SYNOPSIS
 
-  my $ml = Metabase::Librarian->new( 
+  my $ml = Metabase::Librarian->new(
     archive => $archive,
     index => $index,
   );
@@ -166,7 +185,7 @@ Metabase storage and indexing objects.
 
 =head2 C<new>
 
-  my $ml = Metabase::Librarian->new( 
+  my $ml = Metabase::Librarian->new(
     archive => $archive,
     index => $index,
   );
@@ -203,12 +222,21 @@ See L<Metabase::Index> for spec details.
 
   if ( $ml->exists( $guid ) ) { do_stuff() }
 
+=head2 C<iterator>
+
+  my $stream = $ml->iterator;
+  until ( $stream->is_done ) {
+    foreach my $fact ( $stream->items ) {
+      ...
+    }
+  }
+
 =head1 BUGS
 
 I<...no human would stack books this way...>
 
-Please report any bugs or feature using the CPAN Request Tracker.  
-Bugs can be submitted through the web interface at 
+Please report any bugs or feature using the CPAN Request Tracker.
+Bugs can be submitted through the web interface at
 L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
 
 When submitting a bug or request, please include a test-file or a patch to an
@@ -216,9 +244,21 @@ existing test-file that illustrates the bug or desired feature.
 
 =head1 AUTHORS
 
-  David Golden <dagolden@cpan.org>
-  Ricardo Signes <rjbs@cpan.org>
-  Leon Brocard <acme@cpan.org>
+=over 4
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=item *
+
+Ricardo Signes <rjbs@cpan.org>
+
+=item *
+
+Leon Brocard <acme@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

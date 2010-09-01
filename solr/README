@@ -2,7 +2,7 @@ NAME
     Metabase - A database framework and API for resource metadata
 
 VERSION
-    version 0.012
+    version 0.013
 
 DESCRIPTION
     Metabase is a database framework and API for resource metadata. The
@@ -69,9 +69,11 @@ BUGS
     to an existing test-file that illustrates the bug or desired feature.
 
 AUTHORS
-      David Golden <dagolden@cpan.org>
-      Ricardo Signes <rjbs@cpan.org>
-      Leon Brocard <acme@cpan.org>
+    *   David Golden <dagolden@cpan.org>
+
+    *   Ricardo Signes <rjbs@cpan.org>
+
+    *   Leon Brocard <acme@cpan.org>
 
 COPYRIGHT AND LICENSE
     This software is Copyright (c) 2010 by David Golden.
