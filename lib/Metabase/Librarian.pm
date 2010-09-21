@@ -1,23 +1,23 @@
-# 
+#
 # This file is part of Metabase
-# 
+#
 # This software is Copyright (c) 2010 by David Golden.
-# 
+#
 # This is free software, licensed under:
-# 
+#
 #   The Apache License, Version 2.0, January 2004
-# 
+#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Librarian;
 BEGIN {
-  $Metabase::Librarian::VERSION = '0.013';
+  $Metabase::Librarian::VERSION = '0.014';
 }
 # ABSTRACT: Front-end interface to Metabase storage
 
-use Moose;
+use Moose 1.00;
 use Moose::Util::TypeConstraints;
 use Class::MOP ();
 use Carp ();
@@ -165,7 +165,7 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 

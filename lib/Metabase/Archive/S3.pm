@@ -1,19 +1,19 @@
-# 
+#
 # This file is part of Metabase
-# 
+#
 # This software is Copyright (c) 2010 by David Golden.
-# 
+#
 # This is free software, licensed under:
-# 
+#
 #   The Apache License, Version 2.0, January 2004
-# 
+#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Archive::S3;
 BEGIN {
-  $Metabase::Archive::S3::VERSION = '0.013';
+  $Metabase::Archive::S3::VERSION = '0.014';
 }
 # ABSTRACT: Metabase storage using Amazon S3
 
@@ -28,7 +28,7 @@ use Data::Stream::Bulk::Filter;
 use JSON 2 ();
 use Net::Amazon::S3;
 use Path::Class ();
-use Compress::Zlib qw(compress uncompress);
+use Compress::Zlib 2 qw(compress uncompress);
 
 with 'Metabase::Archive';
 
@@ -173,7 +173,7 @@ Metabase::Archive::S3 - Metabase storage using Amazon S3
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 

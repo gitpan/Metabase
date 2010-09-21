@@ -1,6 +1,7 @@
 Changes
 LICENSE
 MANIFEST
+META.json
 META.yml
 Makefile.PL
 README.hacking
@@ -23,6 +24,7 @@ solr/README
 solr/schema.xml
 solr/solr_insert.pl
 solr/solr_search.pl
+t/00-compile.t
 t/gateway/gateway.t
 t/index/base.t
 t/index/flatfile.t
@@ -37,3 +39,4 @@ t/storage/filesystem.t
 xt/release/distmeta.t
 xt/release/pod-coverage.t
 xt/release/pod-syntax.t
+xt/release/portability.t

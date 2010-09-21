@@ -1,0 +1,141 @@
+{
+   "abstract" : "A database framework and API for resource metadata",
+   "author" : [
+      "David Golden <dagolden@cpan.org>",
+      "Ricardo Signes <rjbs@cpan.org>",
+      "Leon Brocard <acme@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.101612, CPAN::Meta::Converter version 2.102400",
+   "license" : [
+      "apache_2_0"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Metabase",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "examples",
+         "corpus"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.31"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "CHI" : 0,
+            "CPAN::DistnameInfo" : 0,
+            "Carp" : 0,
+            "Class::MOP" : 0,
+            "Compress::Zlib" : "2",
+            "DBD::SQLite" : "1",
+            "DBI" : "1",
+            "DBIx::Class" : 0,
+            "DBIx::Class::Schema" : 0,
+            "Data::GUID" : 0,
+            "Data::Stream::Bulk::Filter" : 0,
+            "Fcntl" : 0,
+            "File::Slurp" : 0,
+            "IO::File" : 0,
+            "JSON" : "2",
+            "Metabase::Fact" : "0.018",
+            "Metabase::User::Profile" : 0,
+            "Metabase::User::Secret" : 0,
+            "Moose" : "1.00",
+            "Moose::Role" : 0,
+            "Moose::Util::TypeConstraints" : 0,
+            "MooseX::Types::Path::Class" : 0,
+            "Net::Amazon::S3" : 0,
+            "Path::Class" : 0,
+            "SQL::Abstract" : "1",
+            "SimpleDB::Client" : 0,
+            "Try::Tiny" : 0,
+            "WebService::Solr" : 0,
+            "namespace::autoclean" : 0,
+            "perl" : "5.006"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Find" : 0,
+            "File::Path" : 0,
+            "File::Temp" : 0,
+            "Metabase::Fact::String" : 0,
+            "Metabase::Report" : 0,
+            "Test::Exception" : 0,
+            "Test::Moose" : 0,
+            "Test::More" : "0.88"
+         }
+      }
+   },
+   "provides" : {
+      "Metabase" : {
+         "file" : "lib/Metabase.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Archive" : {
+         "file" : "lib/Metabase/Archive.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Archive::Filesystem" : {
+         "file" : "lib/Metabase/Archive/Filesystem.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Archive::S3" : {
+         "file" : "lib/Metabase/Archive/S3.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Archive::SQLite" : {
+         "file" : "lib/Metabase/Archive/SQLite.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Archive::Schema" : {
+         "file" : "lib/Metabase/Archive/Schema.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Archive::Schema::Fact" : {
+         "file" : "lib/Metabase/Archive/Schema/Fact.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Gateway" : {
+         "file" : "lib/Metabase/Gateway.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Index" : {
+         "file" : "lib/Metabase/Index.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Index::FlatFile" : {
+         "file" : "lib/Metabase/Index/FlatFile.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Index::SimpleDB" : {
+         "file" : "lib/Metabase/Index/SimpleDB.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Index::Solr" : {
+         "file" : "lib/Metabase/Index/Solr.pm",
+         "version" : "0.014"
+      },
+      "Metabase::Librarian" : {
+         "file" : "lib/Metabase/Librarian.pm",
+         "version" : "0.014"
+      }
+   },
+   "release_status" : "testing",
+   "resources" : {
+      "repository" : {
+         "url" : "http://github.com/dagolden/metabase"
+      }
+   },
+   "version" : "0.014"
+}
+

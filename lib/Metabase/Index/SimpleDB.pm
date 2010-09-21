@@ -1,25 +1,25 @@
-# 
+#
 # This file is part of Metabase
-# 
+#
 # This software is Copyright (c) 2010 by David Golden.
-# 
+#
 # This is free software, licensed under:
-# 
+#
 #   The Apache License, Version 2.0, January 2004
-# 
+#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Index::SimpleDB;
 BEGIN {
-  $Metabase::Index::SimpleDB::VERSION = '0.013';
+  $Metabase::Index::SimpleDB::VERSION = '0.014';
 }
 # ABSTRACT: Metabase Amazon SimpleDB index
 
 use Moose;
-use SimpleDB::Class::HTTP;
-use SQL::Abstract;
+use SimpleDB::Client;
+use SQL::Abstract 1;
 use Try::Tiny;
 
 with 'Metabase::Index';
@@ -44,11 +44,11 @@ has 'domain' => (
 
 has 'simpledb' => (
     is      => 'ro',
-    isa     => 'SimpleDB::Class::HTTP',
+    isa     => 'SimpleDB::Client',
     lazy    => 1,
     default => sub {
         my $self = shift;
-        my $sdb = SimpleDB::Class::HTTP->new(
+        my $sdb = SimpleDB::Client->new(
             access_key => $self->access_key_id,
             secret_key => $self->secret_access_key
         );
@@ -245,7 +245,7 @@ Metabase::Index::SimpleDB - Metabase Amazon SimpleDB index
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 

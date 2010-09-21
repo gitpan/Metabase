@@ -1,19 +1,19 @@
-# 
+#
 # This file is part of Metabase
-# 
+#
 # This software is Copyright (c) 2010 by David Golden.
-# 
+#
 # This is free software, licensed under:
-# 
+#
 #   The Apache License, Version 2.0, January 2004
-# 
+#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Archive::SQLite;
 BEGIN {
-  $Metabase::Archive::SQLite::VERSION = '0.013';
+  $Metabase::Archive::SQLite::VERSION = '0.014';
 }
 # ABSTRACT: Metabase storage using SQLite
 
@@ -26,9 +26,9 @@ use Carp        ();
 use Data::GUID  ();
 use JSON 2      ();
 use Path::Class ();
-use DBI         ();
-use DBD::SQLite ();
-use Compress::Zlib qw(compress uncompress);
+use DBI         1 ();
+use DBD::SQLite 1 ();
+use Compress::Zlib 2 qw(compress uncompress);
 use Metabase::Archive::Schema;
 
 with 'Metabase::Archive';
@@ -143,7 +143,7 @@ Metabase::Archive::SQLite - Metabase storage using SQLite
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 

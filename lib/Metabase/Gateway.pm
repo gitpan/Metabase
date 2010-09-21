@@ -1,25 +1,25 @@
-# 
+#
 # This file is part of Metabase
-# 
+#
 # This software is Copyright (c) 2010 by David Golden.
-# 
+#
 # This is free software, licensed under:
-# 
+#
 #   The Apache License, Version 2.0, January 2004
-# 
+#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Gateway;
 BEGIN {
-  $Metabase::Gateway::VERSION = '0.013';
+  $Metabase::Gateway::VERSION = '0.014';
 }
 # ABSTRACT: Manage Metabase fact submission
 
 use Moose::Role;
 
-use Metabase::Fact;
+use Metabase::Fact 0.018;
 use Metabase::Librarian;
 use Metabase::User::Profile;
 use Metabase::User::Secret;
@@ -316,7 +316,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.013
+version 0.014
 
 =head1 SYNOPSIS
 
