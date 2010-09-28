@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::S3;
 BEGIN {
-  $Metabase::Archive::S3::VERSION = '0.014';
+  $Metabase::Archive::S3::VERSION = '0.015';
 }
 # ABSTRACT: Metabase storage using Amazon S3
 
@@ -24,7 +24,7 @@ use MooseX::Types::Path::Class;
 use Metabase::Fact;
 use Carp       ();
 use Data::GUID ();
-use Data::Stream::Bulk::Filter;
+use Data::Stream::Bulk::Filter 0.08;
 use JSON 2 ();
 use Net::Amazon::S3;
 use Path::Class ();
@@ -173,7 +173,7 @@ Metabase::Archive::S3 - Metabase storage using Amazon S3
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 

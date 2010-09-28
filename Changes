@@ -1,5 +1,10 @@
 Revision history for Metabase
 
+0.015     2010-09-28 09:41:27 EST5EDT
+
+    - Add explicit dependency on SQL::Translator 0.11006 for DBIx::Class
+      deploy() used in Metabase::Archive::SQLite
+
 0.014     2010-09-20 22:22:45 EST5EDT
 
     - Now uses SimpleDB::Client instead of SimpleDB::Class

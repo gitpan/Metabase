@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::SQLite;
 BEGIN {
-  $Metabase::Archive::SQLite::VERSION = '0.014';
+  $Metabase::Archive::SQLite::VERSION = '0.015';
 }
 # ABSTRACT: Metabase storage using SQLite
 
@@ -29,6 +29,7 @@ use Path::Class ();
 use DBI         1 ();
 use DBD::SQLite 1 ();
 use Compress::Zlib 2 qw(compress uncompress);
+use SQL::Translator 0.11006 (); # required for deploy()
 use Metabase::Archive::Schema;
 
 with 'Metabase::Archive';
@@ -143,7 +144,7 @@ Metabase::Archive::SQLite - Metabase storage using SQLite
 
 =head1 VERSION
 
-version 0.014
+version 0.015
 
 =head1 SYNOPSIS
 

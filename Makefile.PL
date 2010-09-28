@@ -39,7 +39,7 @@ my %WriteMakefileArgs = (
     'DBIx::Class' => '0',
     'DBIx::Class::Schema' => '0',
     'Data::GUID' => '0',
-    'Data::Stream::Bulk::Filter' => '0',
+    'Data::Stream::Bulk::Filter' => '0.08',
     'Fcntl' => '0',
     'File::Slurp' => '0',
     'IO::File' => '0',
@@ -54,12 +54,13 @@ my %WriteMakefileArgs = (
     'Net::Amazon::S3' => '0',
     'Path::Class' => '0',
     'SQL::Abstract' => '1',
+    'SQL::Translator' => '0.11006',
     'SimpleDB::Client' => '0',
     'Try::Tiny' => '0',
     'WebService::Solr' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.014',
+  'VERSION' => '0.015',
   'test' => {
     'TESTS' => 't/*.t t/gateway/*.t t/index/*.t t/librarian/*.t t/storage/*.t'
   }
