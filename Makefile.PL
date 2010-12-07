@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
- BEGIN { require 5.006; } 
+BEGIN { require 5.006; }
 
 use ExtUtils::MakeMaker 6.31;
 
@@ -60,7 +60,7 @@ my %WriteMakefileArgs = (
     'WebService::Solr' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.015',
+  'VERSION' => '0.016',
   'test' => {
     'TESTS' => 't/*.t t/gateway/*.t t/index/*.t t/librarian/*.t t/storage/*.t'
   }

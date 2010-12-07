@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive::S3;
 BEGIN {
-  $Metabase::Archive::S3::VERSION = '0.015';
+  $Metabase::Archive::S3::VERSION = '0.016';
 }
 # ABSTRACT: Metabase storage using Amazon S3
 
@@ -173,7 +173,7 @@ Metabase::Archive::S3 - Metabase storage using Amazon S3
 
 =head1 VERSION
 
-version 0.015
+version 0.016
 
 =head1 SYNOPSIS
 

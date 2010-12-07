@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Librarian;
 BEGIN {
-  $Metabase::Librarian::VERSION = '0.015';
+  $Metabase::Librarian::VERSION = '0.016';
 }
 # ABSTRACT: Front-end interface to Metabase storage
 
@@ -165,7 +165,7 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 0.015
+version 0.016
 
 =head1 SYNOPSIS
 

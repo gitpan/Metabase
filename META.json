@@ -6,7 +6,7 @@
       "Leon Brocard <acme@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.101612, CPAN::Meta::Converter version 2.102400",
+   "generated_by" : "Dist::Zilla version 4.102341, CPAN::Meta::Converter version 2.102400",
    "license" : [
       "apache_2_0"
    ],
@@ -21,6 +21,9 @@
          "xt",
          "examples",
          "corpus"
+      ],
+      "package" : [
+         "DB"
       ]
    },
    "prereqs" : {
@@ -80,63 +83,66 @@
    "provides" : {
       "Metabase" : {
          "file" : "lib/Metabase.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Archive" : {
          "file" : "lib/Metabase/Archive.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Archive::Filesystem" : {
          "file" : "lib/Metabase/Archive/Filesystem.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Archive::S3" : {
          "file" : "lib/Metabase/Archive/S3.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Archive::SQLite" : {
          "file" : "lib/Metabase/Archive/SQLite.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Archive::Schema" : {
          "file" : "lib/Metabase/Archive/Schema.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Archive::Schema::Fact" : {
          "file" : "lib/Metabase/Archive/Schema/Fact.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Gateway" : {
          "file" : "lib/Metabase/Gateway.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Index" : {
          "file" : "lib/Metabase/Index.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Index::FlatFile" : {
          "file" : "lib/Metabase/Index/FlatFile.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Index::SimpleDB" : {
          "file" : "lib/Metabase/Index/SimpleDB.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Index::Solr" : {
          "file" : "lib/Metabase/Index/Solr.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       },
       "Metabase::Librarian" : {
          "file" : "lib/Metabase/Librarian.pm",
-         "version" : "0.015"
+         "version" : "0.016"
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
+      "homepage" : "http://github.com/dagolden/metabase/tree",
       "repository" : {
-         "url" : "http://github.com/dagolden/metabase"
+         "type" : "git",
+         "url" : "git://github.com/dagolden/metabase.git",
+         "web" : "http://github.com/dagolden/metabase/tree"
       }
    },
-   "version" : "0.015"
+   "version" : "0.016"
 }
 

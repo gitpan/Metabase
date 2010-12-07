@@ -13,7 +13,7 @@ use warnings;
 
 package Metabase::Archive;
 BEGIN {
-  $Metabase::Archive::VERSION = '0.015';
+  $Metabase::Archive::VERSION = '0.016';
 }
 # ABSTRACT: Interface for Metabase storage
 
@@ -34,7 +34,7 @@ Metabase::Archive - Interface for Metabase storage
 
 =head1 VERSION
 
-version 0.015
+version 0.016
 
 =head1 SYNOPSIS
 
