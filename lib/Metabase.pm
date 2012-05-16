@@ -1,22 +1,10 @@
-#
-# This file is part of Metabase
-#
-# This software is Copyright (c) 2010 by David Golden.
-#
-# This is free software, licensed under:
-#
-#   The Apache License, Version 2.0, January 2004
-#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase;
-BEGIN {
-  $Metabase::VERSION = '0.016';
-}
 # ABSTRACT: A database framework and API for resource metadata
-
+our $VERSION = '1.000'; # VERSION
 
 1;
 
@@ -30,7 +18,7 @@ Metabase - A database framework and API for resource metadata
 
 =head1 VERSION
 
-version 0.016
+version 1.000
 
 =head1 DESCRIPTION
 
@@ -46,14 +34,14 @@ Testers project.  When Metabase was initially developed, CPAN Testers reports
 were sent by individual testers to a single email server, which then forwarded
 them to a USENET group, which was considered the authoritative store.  This
 presented problems: some testers couldn't send email, the system wasn't very
-searchable or mirrorable, and the data inside the system was entirely
+searchable, was hard to mirror, and the data inside the system was entirely
 unstructured.
 
 Metabase aimed to avoid all of those problems by being transport-neutral,
-searchable and mirrorable by design, and geared toward storing structured data.
-Simplicity is another design goal: while it has several moving parts, they're
-all simple and designed to be replaceable and extensible, rather than to be a
-perfect design up front.
+searchable and easier to mirror by design, and geared toward storing structured
+data.  Simplicity is another design goal: while it has several moving parts,
+they're all simple and designed to be replaceable and extensible, rather than
+to be a perfect design up front.
 
 =head1 OVERVIEW
 
@@ -61,31 +49,36 @@ A Metabase has several parts:
 
 =over
 
-=item * 
+=item *
 
-L<Metabase::Gateway>, which manages submission of facts to the Librarian
+L<Metabase::Librarian>, a class which manages access to the Archive and Index
 
 =item *
 
-L<Metabase::Librarian>, which manages access to the Archive and Index
+L<Metabase::Gateway>, a role for managing submission of facts to the Librarian
 
 =item *
 
-L<Metabase::Archive>, which stores and retrieves facts
+L<Metabase::Archive>, a role for storing and retrieving facts
 
 =item *
 
-L<Metabase::Index>, which indexes and searches facts
+L<Metabase::Index>, a role for indexing and searching facts
+
+=item *
+
+L<Metabase::Query>, a role for translating a common query data structure into a
+backend-specific query
 
 =back
 
-Archive and Index are abstract base classes.  Implementations could use flat
-files, relational databases, object databases, cloud services, or anything else
-that can satisfy the API.
+Roles require implementations.  These could use flat files, relational
+databases, object databases, cloud services, or anything else that can satisfy
+the role API.
 
-Metabase comes with some standard backends:
+Metabase comes with some simple, stupid backends for testing:
 
-=over
+=over 4
 
 =item *
 
@@ -93,15 +86,7 @@ L<Metabase::Archive::Filesystem>
 
 =item *
 
-L<Metabase::Archive::SQLite>
-
-=item *
-
 L<Metabase::Index::FlatFile>
-
-=item *
-
-L<Metabase::Index::Solr>
 
 =back
 
@@ -113,14 +98,42 @@ facts.  L<Metabase::Client::Simple> is the client library to submit facts to a
 Metabase::Web server.  A future Metabase::Client class will provide submit and
 search capabilities.
 
-=head1 BUGS
+=head1 SEE ALSO
 
-Please report any bugs or feature using the CPAN Request Tracker.  
-Bugs can be submitted through the web interface at 
-L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
+=over 4
 
-When submitting a bug or request, please include a test-file or a patch to an
-existing test-file that illustrates the bug or desired feature.
+=item *
+
+L<Metabase::Backend::AWS>
+
+=item *
+
+L<Metabase::Backend::MongoDB>
+
+=item *
+
+L<Metabase::Backend::SQL>
+
+=back
+
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
+
+=head1 SUPPORT
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests through the issue tracker
+at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Metabase>.
+You will be notified automatically of any progress on your issue.
+
+=head2 Source Code
+
+This is open source software.  The code repository is available for
+public review and contribution under the terms of the license.
+
+L<https://github.com/dagolden/metabase>
+
+  git clone https://github.com/dagolden/metabase.git
 
 =head1 AUTHORS
 
@@ -142,7 +155,7 @@ Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2010 by David Golden.
+This software is Copyright (c) 2012 by David Golden.
 
 This is free software, licensed under:
 

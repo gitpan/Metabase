@@ -2,7 +2,7 @@ NAME
     Metabase - A database framework and API for resource metadata
 
 VERSION
-    version 0.016
+    version 1.000
 
 DESCRIPTION
     Metabase is a database framework and API for resource metadata. The
@@ -16,11 +16,11 @@ DESCRIPTION
     Testers reports were sent by individual testers to a single email
     server, which then forwarded them to a USENET group, which was
     considered the authoritative store. This presented problems: some
-    testers couldn't send email, the system wasn't very searchable or
-    mirrorable, and the data inside the system was entirely unstructured.
+    testers couldn't send email, the system wasn't very searchable, was hard
+    to mirror, and the data inside the system was entirely unstructured.
 
     Metabase aimed to avoid all of those problems by being
-    transport-neutral, searchable and mirrorable by design, and geared
+    transport-neutral, searchable and easier to mirror by design, and geared
     toward storing structured data. Simplicity is another design goal: while
     it has several moving parts, they're all simple and designed to be
     replaceable and extensible, rather than to be a perfect design up front.
@@ -28,28 +28,28 @@ DESCRIPTION
 OVERVIEW
     A Metabase has several parts:
 
-    *   Metabase::Gateway, which manages submission of facts to the
+    *   Metabase::Librarian, a class which manages access to the Archive and
+        Index
+
+    *   Metabase::Gateway, a role for managing submission of facts to the
         Librarian
 
-    *   Metabase::Librarian, which manages access to the Archive and Index
+    *   Metabase::Archive, a role for storing and retrieving facts
 
-    *   Metabase::Archive, which stores and retrieves facts
+    *   Metabase::Index, a role for indexing and searching facts
 
-    *   Metabase::Index, which indexes and searches facts
+    *   Metabase::Query, a role for translating a common query data
+        structure into a backend-specific query
 
-    Archive and Index are abstract base classes. Implementations could use
-    flat files, relational databases, object databases, cloud services, or
-    anything else that can satisfy the API.
+    Roles require implementations. These could use flat files, relational
+    databases, object databases, cloud services, or anything else that can
+    satisfy the role API.
 
-    Metabase comes with some standard backends:
+    Metabase comes with some simple, stupid backends for testing:
 
     *   Metabase::Archive::Filesystem
 
-    *   Metabase::Archive::SQLite
-
     *   Metabase::Index::FlatFile
-
-    *   Metabase::Index::Solr
 
     Facts stored with in a Metabase are defined as subclasses of
     Metabase::Fact. Metabase::Report is a subclass that relates multiple
@@ -60,13 +60,26 @@ OVERVIEW
     a Metabase::Web server. A future Metabase::Client class will provide
     submit and search capabilities.
 
-BUGS
-    Please report any bugs or feature using the CPAN Request Tracker. Bugs
-    can be submitted through the web interface at
-    <http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
+SEE ALSO
+    *   Metabase::Backend::AWS
 
-    When submitting a bug or request, please include a test-file or a patch
-    to an existing test-file that illustrates the bug or desired feature.
+    *   Metabase::Backend::MongoDB
+
+    *   Metabase::Backend::SQL
+
+SUPPORT
+  Bugs / Feature Requests
+    Please report any bugs or feature requests through the issue tracker at
+    <http://rt.cpan.org/Public/Dist/Display.html?Name=Metabase>. You will be
+    notified automatically of any progress on your issue.
+
+  Source Code
+    This is open source software. The code repository is available for
+    public review and contribution under the terms of the license.
+
+    <https://github.com/dagolden/metabase>
+
+      git clone https://github.com/dagolden/metabase.git
 
 AUTHORS
     *   David Golden <dagolden@cpan.org>
@@ -76,7 +89,7 @@ AUTHORS
     *   Leon Brocard <acme@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is Copyright (c) 2010 by David Golden.
+    This software is Copyright (c) 2012 by David Golden.
 
     This is free software, licensed under:
 

@@ -1,21 +1,10 @@
-#
-# This file is part of Metabase
-#
-# This software is Copyright (c) 2010 by David Golden.
-#
-# This is free software, licensed under:
-#
-#   The Apache License, Version 2.0, January 2004
-#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Gateway;
-BEGIN {
-  $Metabase::Gateway::VERSION = '0.016';
-}
 # ABSTRACT: Manage Metabase fact submission
+our $VERSION = '1.000'; # VERSION
 
 use Moose::Role;
 
@@ -316,7 +305,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 0.016
+version 1.000
 
 =head1 SYNOPSIS
 
@@ -429,15 +418,6 @@ public_librarian. The fact is regenerated from the C<as_struct> method.
 Extract a new user profile and secret from deserialized data structures
 and add them via the public_librarian and private_librarian, respectively.
 
-=head1 BUGS
-
-Please report any bugs or feature using the CPAN Request Tracker.
-Bugs can be submitted through the web interface at
-L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
-
-When submitting a bug or request, please include a test-file or a patch to an
-existing test-file that illustrates the bug or desired feature.
-
 =head1 AUTHORS
 
 =over 4
@@ -458,7 +438,7 @@ Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2010 by David Golden.
+This software is Copyright (c) 2012 by David Golden.
 
 This is free software, licensed under:
 

@@ -6,7 +6,7 @@
       "Leon Brocard <acme@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.102341, CPAN::Meta::Converter version 2.102400",
+   "generated_by" : "Dist::Zilla version 4.300016, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "apache_2_0"
    ],
@@ -29,120 +29,127 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.31"
+            "ExtUtils::MakeMaker" : "6.30"
          }
       },
       "runtime" : {
          "requires" : {
-            "CHI" : 0,
-            "CPAN::DistnameInfo" : 0,
-            "Carp" : 0,
-            "Class::MOP" : 0,
-            "Compress::Zlib" : "2",
-            "DBD::SQLite" : "1",
-            "DBI" : "1",
-            "DBIx::Class" : 0,
-            "DBIx::Class::Schema" : 0,
-            "Data::GUID" : 0,
-            "Data::Stream::Bulk::Filter" : "0.08",
-            "Fcntl" : 0,
-            "File::Slurp" : 0,
-            "IO::File" : 0,
+            "CHI" : "0",
+            "CPAN::DistnameInfo" : "0",
+            "Carp" : "0",
+            "Class::MOP" : "0",
+            "Data::GUID" : "0",
+            "Data::Stream::Bulk::Array" : "0",
+            "Data::Stream::Bulk::Callback" : "0",
+            "Data::Stream::Bulk::Filter" : "0",
+            "Data::Stream::Bulk::Nil" : "0",
+            "Fcntl" : "0",
+            "File::Slurp" : "0",
+            "IO::File" : "0",
             "JSON" : "2",
+            "List::AllUtils" : "0",
             "Metabase::Fact" : "0.018",
-            "Metabase::User::Profile" : 0,
-            "Metabase::User::Secret" : 0,
+            "Metabase::Fact::String" : "0",
+            "Metabase::User::Profile" : "0",
+            "Metabase::User::Secret" : "0",
             "Moose" : "1.00",
-            "Moose::Role" : 0,
-            "Moose::Util::TypeConstraints" : 0,
-            "MooseX::Types::Path::Class" : 0,
-            "Net::Amazon::S3" : 0,
-            "Path::Class" : 0,
-            "SQL::Abstract" : "1",
-            "SQL::Translator" : "0.11006",
-            "SimpleDB::Client" : 0,
-            "Try::Tiny" : 0,
-            "WebService::Solr" : 0,
-            "namespace::autoclean" : 0,
-            "perl" : "5.006"
+            "Moose::Role" : "0",
+            "Moose::Util::TypeConstraints" : "0",
+            "MooseX::Types::Moose" : "0",
+            "MooseX::Types::Path::Class" : "0",
+            "MooseX::Types::Structured" : "0",
+            "Regexp::SQL::LIKE" : "0.001",
+            "Test::Deep" : "0",
+            "Test::More" : "0.92",
+            "Test::Routine" : "0",
+            "Tie::File" : "0",
+            "namespace::autoclean" : "0",
+            "parent" : "0",
+            "perl" : "5.006",
+            "strict" : "0",
+            "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "File::Find" : 0,
-            "File::Path" : 0,
-            "File::Temp" : 0,
-            "Metabase::Fact::String" : 0,
-            "Metabase::Report" : 0,
-            "Test::Exception" : 0,
-            "Test::Moose" : 0,
-            "Test::More" : "0.88"
+            "File::Find" : "0",
+            "File::Path" : "0",
+            "File::Temp" : "0",
+            "Metabase::Report" : "0",
+            "Path::Class" : "0",
+            "Test::Exception" : "0",
+            "Test::Routine::Util" : "0",
+            "base" : "0"
          }
       }
    },
    "provides" : {
       "Metabase" : {
          "file" : "lib/Metabase.pm",
-         "version" : "0.016"
+         "version" : "1.000"
       },
       "Metabase::Archive" : {
          "file" : "lib/Metabase/Archive.pm",
-         "version" : "0.016"
+         "version" : "1.000"
       },
       "Metabase::Archive::Filesystem" : {
          "file" : "lib/Metabase/Archive/Filesystem.pm",
-         "version" : "0.016"
-      },
-      "Metabase::Archive::S3" : {
-         "file" : "lib/Metabase/Archive/S3.pm",
-         "version" : "0.016"
-      },
-      "Metabase::Archive::SQLite" : {
-         "file" : "lib/Metabase/Archive/SQLite.pm",
-         "version" : "0.016"
-      },
-      "Metabase::Archive::Schema" : {
-         "file" : "lib/Metabase/Archive/Schema.pm",
-         "version" : "0.016"
-      },
-      "Metabase::Archive::Schema::Fact" : {
-         "file" : "lib/Metabase/Archive/Schema/Fact.pm",
-         "version" : "0.016"
+         "version" : "1.000"
       },
       "Metabase::Gateway" : {
          "file" : "lib/Metabase/Gateway.pm",
-         "version" : "0.016"
+         "version" : "1.000"
       },
       "Metabase::Index" : {
          "file" : "lib/Metabase/Index.pm",
-         "version" : "0.016"
+         "version" : "1.000"
       },
       "Metabase::Index::FlatFile" : {
          "file" : "lib/Metabase/Index/FlatFile.pm",
-         "version" : "0.016"
-      },
-      "Metabase::Index::SimpleDB" : {
-         "file" : "lib/Metabase/Index/SimpleDB.pm",
-         "version" : "0.016"
-      },
-      "Metabase::Index::Solr" : {
-         "file" : "lib/Metabase/Index/Solr.pm",
-         "version" : "0.016"
+         "version" : "1.000"
       },
       "Metabase::Librarian" : {
          "file" : "lib/Metabase/Librarian.pm",
-         "version" : "0.016"
+         "version" : "1.000"
+      },
+      "Metabase::Query" : {
+         "file" : "lib/Metabase/Query.pm",
+         "version" : "1.000"
+      },
+      "Metabase::Test::Archive" : {
+         "file" : "lib/Metabase/Test/Archive.pm",
+         "version" : "1.000"
+      },
+      "Metabase::Test::Archive::Null" : {
+         "file" : "lib/Metabase/Test/Archive/Null.pm",
+         "version" : "1.000"
+      },
+      "Metabase::Test::Fact" : {
+         "file" : "lib/Metabase/Test/Fact.pm",
+         "version" : "1.000"
+      },
+      "Metabase::Test::Factory" : {
+         "file" : "lib/Metabase/Test/Factory.pm",
+         "version" : "1.000"
+      },
+      "Metabase::Test::Index" : {
+         "file" : "lib/Metabase/Test/Index.pm",
+         "version" : "1.000"
       }
    },
    "release_status" : "stable",
    "resources" : {
-      "homepage" : "http://github.com/dagolden/metabase/tree",
+      "bugtracker" : {
+         "mailto" : "bug-metabase at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Metabase"
+      },
+      "homepage" : "https://github.com/dagolden/metabase",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/dagolden/metabase.git",
-         "web" : "http://github.com/dagolden/metabase/tree"
+         "url" : "https://github.com/dagolden/metabase.git",
+         "web" : "https://github.com/dagolden/metabase"
       }
    },
-   "version" : "0.016"
+   "version" : "1.000"
 }
 

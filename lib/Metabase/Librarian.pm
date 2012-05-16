@@ -1,21 +1,10 @@
-#
-# This file is part of Metabase
-#
-# This software is Copyright (c) 2010 by David Golden.
-#
-# This is free software, licensed under:
-#
-#   The Apache License, Version 2.0, January 2004
-#
 use 5.006;
 use strict;
 use warnings;
 
 package Metabase::Librarian;
-BEGIN {
-  $Metabase::Librarian::VERSION = '0.016';
-}
 # ABSTRACT: Front-end interface to Metabase storage
+our $VERSION = '1.000'; # VERSION
 
 use Moose 1.00;
 use Moose::Util::TypeConstraints;
@@ -40,6 +29,11 @@ has 'index' => (
     required => 1,
 );
 
+sub BUILD {
+  my $self = shift;
+  $self->archive->initialize();
+}
+
 # given fact, store it and return guid;
 sub store {
     my ($self, $fact) = @_;
@@ -51,6 +45,9 @@ sub store {
 
     # Don't store existing GUIDs; this should never happen, since we're just
     # generating a new one, but... hey, can't be too safe, right?
+    # XXX maybe delegate this down to archive/index, because if they
+    # have unique constraint enforcement, then there's no reason to do
+    # this extra (negative) query
     if ( $self->index->exists( $fact->guid ) ) {
         Carp::confess("GUID conflicts with an existing object");
     }
@@ -165,7 +162,7 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 0.016
+version 1.000
 
 =head1 SYNOPSIS
 
@@ -179,7 +176,7 @@ version 0.016
 The Metabase::Librarian class provides a front-end interface to user-defined
 Metabase storage and indexing objects.
 
-=for Pod::Coverage delete
+=for Pod::Coverage BUILD delete
 
 =head1 USAGE
 
@@ -231,17 +228,6 @@ See L<Metabase::Index> for spec details.
     }
   }
 
-=head1 BUGS
-
-I<...no human would stack books this way...>
-
-Please report any bugs or feature using the CPAN Request Tracker.
-Bugs can be submitted through the web interface at
-L<http://rt.cpan.org/Dist/Display.html?Queue=Metabase>
-
-When submitting a bug or request, please include a test-file or a patch to an
-existing test-file that illustrates the bug or desired feature.
-
 =head1 AUTHORS
 
 =over 4
@@ -262,7 +248,7 @@ Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2010 by David Golden.
+This software is Copyright (c) 2012 by David Golden.
 
 This is free software, licensed under:
 

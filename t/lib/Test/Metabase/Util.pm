@@ -1,12 +1,3 @@
-#
-# This file is part of Metabase
-#
-# This software is Copyright (c) 2010 by David Golden.
-#
-# This is free software, licensed under:
-#
-#   The Apache License, Version 2.0, January 2004
-#
 package Test::Metabase::Util;
 use Moose;
 
@@ -54,14 +45,14 @@ has test_archive_class => (
     is       => 'ro',
     isa      => 'Str',
     required => 1,
-    default  => 'Metabase::Archive::SQLite',
+    default  => 'Metabase::Archive::Filesystem',
 );
 
 has test_archive_args => (
     is       => 'ro',
     isa      => 'ArrayRef',
     required => 1,
-    default  => sub { [filename => "$temp_dir/store.db", compressed => 0] },
+    default  => sub { [root_dir => "$temp_dir/archive"] },
 );
 
 has test_archive => (

@@ -1,5 +1,25 @@
 Revision history for Metabase
 
+1.000     2012-05-16 13:23:04 America/New_York
+
+    - The 1.000 release reflects a major reorganization of the Metabase
+      distribution and is not backwards compatible.
+
+    - The Archive and Index roles have an expanded API with additional
+      required methods
+
+    - A Query role has been added to abstract query requirements from the
+      indexer to allow for backend-specific query implementations
+
+    - Tests have been converted to Test::Routine style roles, which are
+      released with the distribution for use in backend tests in other
+      distributions.
+
+    - AWS and SQLite backends have been removed and will be released as
+      separate distributions.
+
+    - Solr backend has been removed.
+
 0.016     2010-12-07 15:27:49 EST5EDT
 
     - No changes.  Released as stable
