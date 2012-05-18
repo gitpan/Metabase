@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Index;
 # ABSTRACT: Test::Routine role for testing Metabase::Index implementations
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Metabase::Fact;
 use Metabase::Test::Fact;
@@ -222,7 +222,7 @@ Metabase::Test::Index - Test::Routine role for testing Metabase::Index implement
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =for Pod::Coverage reset
 

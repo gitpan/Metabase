@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Factory;
 # ABSTRACT: Test::Routine role for testing Metabase::Index implementations
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Metabase::Fact;
 use Metabase::Test::Fact;
@@ -55,7 +55,7 @@ Metabase::Test::Factory - Test::Routine role for testing Metabase::Index impleme
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 AUTHORS
 

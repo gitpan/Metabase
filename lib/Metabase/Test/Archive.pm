@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Archive;
 # ABSTRACT: Test::Routine role for testing Metabase::Archive implementations
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Metabase::Fact;
 use Metabase::Test::Factory;
@@ -117,7 +117,7 @@ Metabase::Test::Archive - Test::Routine role for testing Metabase::Archive imple
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =for Pod::Coverage store_all
 

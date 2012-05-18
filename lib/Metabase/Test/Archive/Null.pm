@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Archive::Null;
 # ABSTRACT: Metabase storage that discards all data
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Moose;
 
@@ -56,7 +56,7 @@ Metabase::Test::Archive::Null - Metabase storage that discards all data
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 

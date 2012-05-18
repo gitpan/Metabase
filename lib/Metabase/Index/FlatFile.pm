@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Index::FlatFile;
 # ABSTRACT: Metabase flat-file index
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -253,7 +253,7 @@ Metabase::Index::FlatFile - Metabase flat-file index
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 

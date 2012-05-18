@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Archive::Filesystem;
 # ABSTRACT: Metabase filesystem-based storage
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -134,7 +134,7 @@ Metabase::Archive::Filesystem - Metabase filesystem-based storage
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 

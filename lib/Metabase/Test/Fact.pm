@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Fact;
 # ABSTRACT: Test class for Metabase testing
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 # Metabase::Fact is not a Moose class
 use parent 'Metabase::Fact::String';
@@ -44,7 +44,7 @@ Metabase::Test::Fact - Test class for Metabase testing
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 AUTHORS
 

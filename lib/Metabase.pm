@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase;
 # ABSTRACT: A database framework and API for resource metadata
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 1;
 
@@ -18,7 +18,7 @@ Metabase - A database framework and API for resource metadata
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 DESCRIPTION
 

@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Archive;
 # ABSTRACT: Interface for Metabase storage
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Moose::Role;
 
@@ -26,7 +26,7 @@ Metabase::Archive - Interface for Metabase storage
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 

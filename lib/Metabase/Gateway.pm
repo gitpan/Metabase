@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Gateway;
 # ABSTRACT: Manage Metabase fact submission
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Moose::Role;
 
@@ -74,7 +74,7 @@ has authentication_timeout => (
 has cache_options => (
   is          => 'ro',
   isa         => 'HashRef',
-  default     => sub { { driver => 'Memory' } },
+  default     => sub { my $hash = {}; return { driver => 'Memory', datastore => $hash } },
 );
 
 has _cache => (
@@ -305,7 +305,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 

@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Librarian;
 # ABSTRACT: Front-end interface to Metabase storage
-our $VERSION = '1.000'; # VERSION
+our $VERSION = '1.001'; # VERSION
 
 use Moose 1.00;
 use Moose::Util::TypeConstraints;
@@ -162,7 +162,7 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 1.000
+version 1.001
 
 =head1 SYNOPSIS
 
