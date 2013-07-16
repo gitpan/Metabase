@@ -23,6 +23,7 @@ lib/Metabase/Test/Fact.pm
 lib/Metabase/Test/Factory.pm
 lib/Metabase/Test/Index.pm
 t/00-compile.t
+t/00-report-prereqs.t
 t/archive/filesystem.t
 t/gateway/gateway.t
 t/index/flatfile.t
@@ -35,6 +36,7 @@ t/librarian/simple.t
 xt/author/critic.t
 xt/author/pod-spell.t
 xt/release/distmeta.t
+xt/release/minimum-version.t
 xt/release/pod-coverage.t
 xt/release/pod-syntax.t
 xt/release/portability.t

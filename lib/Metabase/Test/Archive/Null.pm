@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Archive::Null;
 # ABSTRACT: Metabase storage that discards all data
-our $VERSION = '1.001'; # VERSION
+our $VERSION = '1.002'; # VERSION
 
 use Moose;
 
@@ -46,9 +46,11 @@ sub iterator {
 
 1;
 
-
+__END__
 
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -56,7 +58,7 @@ Metabase::Test::Archive::Null - Metabase storage that discards all data
 
 =head1 VERSION
 
-version 1.001
+version 1.002
 
 =head1 SYNOPSIS
 
@@ -89,14 +91,10 @@ Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by David Golden.
+This software is Copyright (c) 2013 by David Golden.
 
 This is free software, licensed under:
 
   The Apache License, Version 2.0, January 2004
 
 =cut
-
-
-__END__
-

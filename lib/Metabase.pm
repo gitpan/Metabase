@@ -4,13 +4,15 @@ use warnings;
 
 package Metabase;
 # ABSTRACT: A database framework and API for resource metadata
-our $VERSION = '1.001'; # VERSION
+our $VERSION = '1.002'; # VERSION
 
 1;
 
-
+__END__
 
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -18,7 +20,7 @@ Metabase - A database framework and API for resource metadata
 
 =head1 VERSION
 
-version 1.001
+version 1.002
 
 =head1 DESCRIPTION
 
@@ -123,7 +125,7 @@ L<Metabase::Backend::SQL>
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the issue tracker
-at L<http://rt.cpan.org/Public/Dist/Display.html?Name=Metabase>.
+at L<https://rt.cpan.org/Public/Dist/Display.html?Name=Metabase>.
 You will be notified automatically of any progress on your issue.
 
 =head2 Source Code
@@ -133,7 +135,7 @@ public review and contribution under the terms of the license.
 
 L<https://github.com/dagolden/metabase>
 
-  git clone https://github.com/dagolden/metabase.git
+  git clone git://github.com/dagolden/metabase.git
 
 =head1 AUTHORS
 
@@ -153,16 +155,34 @@ Leon Brocard <acme@cpan.org>
 
 =back
 
+=head1 CONTRIBUTORS
+
+=over 4
+
+=item *
+
+Florian Ragwitz <rafl@debian.org>
+
+=item *
+
+Graham Knop <haarg@haarg.org>
+
+=item *
+
+Leon Brocard <acme@astray.com>
+
+=item *
+
+Ricardo SIGNES <rjbs@cpan.org>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by David Golden.
+This software is Copyright (c) 2013 by David Golden.
 
 This is free software, licensed under:
 
   The Apache License, Version 2.0, January 2004
 
 =cut
-
-
-__END__
-

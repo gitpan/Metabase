@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Test::Archive;
 # ABSTRACT: Test::Routine role for testing Metabase::Archive implementations
-our $VERSION = '1.001'; # VERSION
+our $VERSION = '1.002'; # VERSION
 
 use Metabase::Fact;
 use Metabase::Test::Factory;
@@ -107,9 +107,11 @@ test "deletion" => sub {
 
 1;
 
-
 __END__
+
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -117,7 +119,7 @@ Metabase::Test::Archive - Test::Routine role for testing Metabase::Archive imple
 
 =head1 VERSION
 
-version 1.001
+version 1.002
 
 =for Pod::Coverage store_all
 
@@ -141,11 +143,10 @@ Leon Brocard <acme@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by David Golden.
+This software is Copyright (c) 2013 by David Golden.
 
 This is free software, licensed under:
 
   The Apache License, Version 2.0, January 2004
 
 =cut
-
