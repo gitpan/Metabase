@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Archive;
 # ABSTRACT: Interface for Metabase storage
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Moose::Role;
 
@@ -20,7 +20,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -28,7 +28,7 @@ Metabase::Archive - Interface for Metabase storage
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 

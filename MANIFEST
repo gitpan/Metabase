@@ -8,6 +8,7 @@ README
 README.PATCHING
 README.STYLE
 Todo
+cpanfile
 dist.ini
 lib/Metabase.pm
 lib/Metabase/Archive.pm
@@ -22,7 +23,7 @@ lib/Metabase/Test/Archive/Null.pm
 lib/Metabase/Test/Fact.pm
 lib/Metabase/Test/Factory.pm
 lib/Metabase/Test/Index.pm
-t/00-compile.t
+perlcritic.rc
 t/00-report-prereqs.t
 t/archive/filesystem.t
 t/gateway/gateway.t
@@ -33,6 +34,7 @@ t/lib/Test/Metabase/StringFact.pm
 t/lib/Test/Metabase/Util.pm
 t/librarian/report.t
 t/librarian/simple.t
+xt/author/00-compile.t
 xt/author/critic.t
 xt/author/pod-spell.t
 xt/release/distmeta.t

@@ -6,7 +6,7 @@
       "Leon Brocard <acme@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300036, CPAN::Meta::Converter version 2.131560",
+   "generated_by" : "Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830",
    "license" : [
       "apache_2_0"
    ],
@@ -29,13 +29,20 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "6.17"
          }
       },
       "develop" : {
          "requires" : {
+            "Dist::Zilla" : "5.006",
+            "Dist::Zilla::PluginBundle::DAGOLDEN" : "0.030",
+            "File::Spec" : "0",
+            "File::Temp" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
             "Pod::Coverage::TrustPod" : "0",
             "Test::CPAN::Meta" : "0",
+            "Test::More" : "0",
             "Test::Pod" : "1.41",
             "Test::Pod::Coverage" : "1.08"
          }
@@ -79,9 +86,12 @@
          }
       },
       "test" : {
+         "recommends" : {
+            "CPAN::Meta" : "0",
+            "CPAN::Meta::Requirements" : "0"
+         },
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
-            "File::Find" : "0",
             "File::Path" : "0",
             "File::Spec::Functions" : "0",
             "File::Temp" : "0",
@@ -98,71 +108,71 @@
    "provides" : {
       "Metabase" : {
          "file" : "lib/Metabase.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Archive" : {
          "file" : "lib/Metabase/Archive.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Archive::Filesystem" : {
          "file" : "lib/Metabase/Archive/Filesystem.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Gateway" : {
          "file" : "lib/Metabase/Gateway.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Index" : {
          "file" : "lib/Metabase/Index.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Index::FlatFile" : {
          "file" : "lib/Metabase/Index/FlatFile.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Librarian" : {
          "file" : "lib/Metabase/Librarian.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Query" : {
          "file" : "lib/Metabase/Query.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Test::Archive" : {
          "file" : "lib/Metabase/Test/Archive.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Test::Archive::Null" : {
          "file" : "lib/Metabase/Test/Archive/Null.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Test::Fact" : {
          "file" : "lib/Metabase/Test/Fact.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Test::Factory" : {
          "file" : "lib/Metabase/Test/Factory.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       },
       "Metabase::Test::Index" : {
          "file" : "lib/Metabase/Test/Index.pm",
-         "version" : "1.002"
+         "version" : "1.003"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "mailto" : "bug-Metabase@rt.cpan.org",
-         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=Metabase"
+         "web" : "https://github.com/rjbs/metabase/issues"
       },
-      "homepage" : "https://metacpan.org/release/Metabase",
+      "homepage" : "https://github.com/rjbs/metabase",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/dagolden/metabase.git",
-         "web" : "https://github.com/dagolden/metabase"
+         "url" : "https://github.com/rjbs/metabase.git",
+         "web" : "https://github.com/rjbs/metabase"
       }
    },
-   "version" : "1.002",
+   "version" : "1.003",
+   "x_authority" : "cpan:DAGOLDEN",
    "x_contributors" : [
       "Florian Ragwitz <rafl@debian.org>",
       "Graham Knop <haarg@haarg.org>",

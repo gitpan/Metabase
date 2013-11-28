@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Archive::Filesystem;
 # ABSTRACT: Metabase filesystem-based storage
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -128,7 +128,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -136,7 +136,7 @@ Metabase::Archive::Filesystem - Metabase filesystem-based storage
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 
@@ -151,11 +151,11 @@ version 1.002
 Store facts as files in the filesystem, hashed into a directory tree by GUID to
 manage the number of files in any particular directory.
 
-=for Pod::Coverage store extract delete initialize iterator
-
 =head1 USAGE
 
 See L<Metabase::Archive> and L<Metabase::Librarian>.
+
+=for Pod::Coverage store extract delete initialize iterator
 
 =head1 AUTHORS
 

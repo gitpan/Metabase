@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Gateway;
 # ABSTRACT: Manage Metabase fact submission
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Moose::Role;
 
@@ -100,7 +100,7 @@ sub _build_approved_types {
     # XXX $class->can('fact_classes') ?? -- dagolden, 2009-03-31
     push @queue, $class->fact_classes if $class->isa('Metabase::Report');
   }
-  return [ map { Class::MOP::load_class($_); $_->type } @approved ];
+  return [ map { Class::Load::load_class($_); $_->type } @approved ];
 }
 
 # for use in handle_XXXX methods
@@ -299,7 +299,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -307,7 +307,7 @@ Metabase::Gateway - Manage Metabase fact submission
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 

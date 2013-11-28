@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Query;
 # ABSTRACT: Generic Metabase query language role
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Carp ();
 use List::AllUtils qw/all/;
@@ -133,7 +133,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -141,7 +141,7 @@ Metabase::Query - Generic Metabase query language role
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 

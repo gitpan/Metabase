@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Index;
 # ABSTRACT: Interface for Metabase indexing
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Moose::Role;
 
@@ -59,7 +59,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -67,7 +67,7 @@ Metabase::Index - Interface for Metabase indexing
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 

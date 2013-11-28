@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase;
 # ABSTRACT: A database framework and API for resource metadata
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 1;
 
@@ -12,7 +12,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -20,7 +20,7 @@ Metabase - A database framework and API for resource metadata
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 DESCRIPTION
 
@@ -125,7 +125,7 @@ L<Metabase::Backend::SQL>
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the issue tracker
-at L<https://rt.cpan.org/Public/Dist/Display.html?Name=Metabase>.
+at L<https://github.com/rjbs/metabase/issues>.
 You will be notified automatically of any progress on your issue.
 
 =head2 Source Code
@@ -133,9 +133,9 @@ You will be notified automatically of any progress on your issue.
 This is open source software.  The code repository is available for
 public review and contribution under the terms of the license.
 
-L<https://github.com/dagolden/metabase>
+L<https://github.com/rjbs/metabase>
 
-  git clone git://github.com/dagolden/metabase.git
+  git clone https://github.com/rjbs/metabase.git
 
 =head1 AUTHORS
 

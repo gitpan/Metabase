@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Index::FlatFile;
 # ABSTRACT: Metabase flat-file index
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -247,7 +247,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -255,7 +255,7 @@ Metabase::Index::FlatFile - Metabase flat-file index
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 
@@ -269,13 +269,13 @@ version 1.002
 
 Flat-file Metabase index.
 
-=for Pod::Coverage::TrustPod add search delete count LOCK_EX LOCK_SH
-initialize query translate_query op_eq op_ne op_gt op_lt op_ge op_le
-op_between op_like op_not op_or op_and
-
 =head1 USAGE
 
 See L<Metabase::Index>, L<Metabase::Query> and L<Metabase::Librarian>.
+
+=for Pod::Coverage::TrustPod add search delete count LOCK_EX LOCK_SH
+initialize query translate_query op_eq op_ne op_gt op_lt op_ge op_le
+op_between op_like op_not op_or op_and
 
 =head1 AUTHORS
 

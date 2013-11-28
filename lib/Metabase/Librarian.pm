@@ -4,7 +4,7 @@ use warnings;
 
 package Metabase::Librarian;
 # ABSTRACT: Front-end interface to Metabase storage
-our $VERSION = '1.002'; # VERSION
+our $VERSION = '1.003'; # VERSION
 
 use Moose 1.00;
 use Moose::Util::TypeConstraints;
@@ -156,7 +156,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -164,7 +164,7 @@ Metabase::Librarian - Front-end interface to Metabase storage
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 SYNOPSIS
 
@@ -177,8 +177,6 @@ version 1.002
 
 The Metabase::Librarian class provides a front-end interface to user-defined
 Metabase storage and indexing objects.
-
-=for Pod::Coverage BUILD delete
 
 =head1 USAGE
 
@@ -229,6 +227,8 @@ See L<Metabase::Index> for spec details.
       ...
     }
   }
+
+=for Pod::Coverage BUILD delete
 
 =head1 AUTHORS
 
